@@ -314,7 +314,9 @@
             dailyFocusMinutes: 0,
             sessionStartTime: null,
             pomodoroCount: 0, // Tracks completed pomodoros
-            currentMode: 'focus' // 'focus', 'shortBreak', 'longBreak'
+            currentMode: 'focus', // 'focus', 'shortBreak', 'longBreak'
+            hasRequestedPermission: false, // Only request notification permission once
+            titleFlashInterval: null // For title flashing
         };
 
         // =====================
@@ -330,20 +332,55 @@
         // =====================
         // Notification Helpers
         // =====================
+        const originalTitle = document.title;
+
         function requestNotificationPermission() {
-            if ('Notification' in window && Notification.permission === 'default') {
+            if ('Notification' in window && Notification.permission === 'default' && !state.hasRequestedPermission) {
+                state.hasRequestedPermission = true;
                 Notification.requestPermission();
             }
         }
 
         function sendNotification(title, body) {
+            // Desktop notification (not supported on iOS)
             if ('Notification' in window && Notification.permission === 'granted') {
-                new Notification(title, {
-                    body: body,
-                    icon: favicons.focus,
-                    tag: 'odaklan-notification'
-                });
+                try {
+                    new Notification(title, {
+                        body: body,
+                        icon: favicons.focus,
+                        tag: 'odaklan-notification'
+                    });
+                } catch (e) {
+                    // Notification failed, use title flash as fallback
+                }
             }
+
+            // Title flash - works on ALL platforms including iOS
+            flashTitle(title);
+        }
+
+        function flashTitle(message) {
+            // Clear any existing flash
+            if (state.titleFlashInterval) {
+                clearInterval(state.titleFlashInterval);
+                document.title = originalTitle;
+            }
+
+            let isOriginal = false;
+            let flashCount = 0;
+            const maxFlashes = 10; // Flash 10 times (5 seconds total)
+
+            state.titleFlashInterval = setInterval(() => {
+                document.title = isOriginal ? message : originalTitle;
+                isOriginal = !isOriginal;
+                flashCount++;
+
+                if (flashCount >= maxFlashes * 2) {
+                    clearInterval(state.titleFlashInterval);
+                    state.titleFlashInterval = null;
+                    document.title = originalTitle;
+                }
+            }, 500);
         }
 
         function updateFavicon(mode) {
@@ -411,7 +448,23 @@
         }
 
         function updateTimerDisplay() {
-            elements.timerDisplay.textContent = formatTime(state.timeRemaining);
+            const timeString = formatTime(state.timeRemaining);
+            elements.timerDisplay.textContent = timeString;
+
+            // Update tab title with countdown when timer is running
+            if (state.isRunning) {
+                const modeEmoji = {
+                    'focus': '🎯',
+                    'shortBreak': '☕',
+                    'longBreak': '🌴'
+                };
+                const modeName = {
+                    'focus': 'Odak',
+                    'shortBreak': 'Mola',
+                    'longBreak': 'Uzun Mola'
+                };
+                document.title = `(${timeString}) ${modeEmoji[state.currentMode]} ${modeName[state.currentMode]} | Odaklan!`;
+            }
         }
 
         function updateProgressRing() {
@@ -437,6 +490,9 @@
 
             state.isRunning = true;
             state.sessionStartTime = Date.now();
+
+            // Request notification permission on first start (only once)
+            requestNotificationPermission();
 
             // Enter focus mode
             elements.app.classList.add('focus-mode');
@@ -488,17 +544,25 @@
 
             // Remove pulse animation
             elements.pauseBtn.classList.remove('pulse-animation');
+
+            // Reset tab title
+            document.title = originalTitle;
         }
 
         function resetTimer() {
             pauseTimer();
             state.timeRemaining = POMODORO_DURATION;
+            state.currentMode = 'focus'; // Reset to focus mode
             updateTimerDisplay();
             updateProgressRing();
+            updateModeDisplay();
 
             // Hide control buttons
             elements.resetBtn.classList.add('hidden');
             elements.skipBtn.classList.add('hidden');
+
+            // Reset tab title
+            document.title = originalTitle;
         }
 
         function completePomodoro(isSkipped = false) {
@@ -725,7 +789,7 @@
             updateProgressRing();
             updateModeDisplay();
             updatePomodoroCounter();
-            requestNotificationPermission();
+            // Note: Notification permission is requested on first timer start, not here
         }
 
         init();
