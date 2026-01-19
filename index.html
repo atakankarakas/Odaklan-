@@ -559,6 +559,9 @@
             updateProgressRing();
             updateModeDisplay();
 
+            // Stop all ambient sounds on reset
+            stopAllSounds();
+
             // Hide control buttons
             elements.resetBtn.classList.add('hidden');
             elements.skipBtn.classList.add('hidden');
@@ -571,6 +574,9 @@
             clearInterval(state.intervalId);
             state.isRunning = false;
 
+            // Stop all ambient sounds for a clean transition
+            stopAllSounds();
+
             // Only add focus time if we're in focus mode
             if (state.currentMode === 'focus') {
                 // Calculate actual focused time
@@ -579,8 +585,8 @@
                     // If skipped, add only the actual time spent
                     minutesToAdd = Math.floor((Date.now() - state.sessionStartTime) / 60000);
                 } else {
-                    // If naturally completed, add full 25 minutes
-                    minutesToAdd = 25;
+                    // If naturally completed, add full session duration (dynamic, not hardcoded)
+                    minutesToAdd = Math.round(POMODORO_DURATION / 60);
                 }
 
                 if (minutesToAdd > 0) {
@@ -589,9 +595,12 @@
                     updateDailyFocusDisplay();
                 }
 
-                // Increment pomodoro count
-                state.pomodoroCount++;
-                updatePomodoroCounter();
+                // Only increment pomodoro count if NOT skipped (no cheating!)
+                // This prevents "Başla -> Skip -> Uzun Mola" exploit
+                if (!isSkipped) {
+                    state.pomodoroCount++;
+                    updatePomodoroCounter();
+                }
 
                 // Show completion modal only after focus sessions
                 showCompletionModal();
