@@ -531,16 +531,8 @@
             state.isRunning = false;
             clearInterval(state.intervalId);
 
-            // Calculate focused time for this session
-            if (state.sessionStartTime) {
-                const sessionMinutes = Math.floor((Date.now() - state.sessionStartTime) / 60000);
-                if (sessionMinutes > 0) {
-                    state.dailyFocusMinutes += sessionMinutes;
-                    saveDailyFocus();
-                    updateDailyFocusDisplay();
-                }
-                state.sessionStartTime = null;
-            }
+            // NOTE: We do NOT count time here to avoid double counting
+            // Time is only counted in completePomodoro() when session ends naturally or via skip
 
             // Clear target end time (will be recalculated on resume)
             state.targetEndTime = null;
