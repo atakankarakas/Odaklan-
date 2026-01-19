@@ -144,17 +144,34 @@
     <div id="app" class="min-h-screen flex flex-col items-center justify-center relative px-4">
 
         <!-- Header -->
-        <header class="focusable absolute top-8 left-0 right-0 text-center">
-            <h1 class="text-2xl font-semibold tracking-tight">
+        <header class="focusable absolute top-8 left-0 right-0 flex justify-between items-center px-8 z-10">
+            <!-- Notification Bell (Left) -->
+            <button id="notification-btn" class="text-slate-400 hover:text-accent transition-colors"
+                title="Bildirim Ayarları">
+                <i id="notification-icon" class="fa-regular fa-bell"></i>
+            </button>
+
+            <!-- Title (Center) -->
+            <h1
+                class="text-2xl font-semibold tracking-tight absolute left-1/2 -translate-x-1/2 w-full text-center pointer-events-none">
                 <span class="text-accent">Odaklan</span><span class="text-slate-400">!</span>
             </h1>
+
+            <!-- Right Side Spacer (to balance the layout against the bell) -->
+            <div class="w-4"></div>
         </header>
 
         <!-- Daily Focus Stats -->
-        <div class="focusable absolute top-8 right-8">
-            <div class="flex items-center gap-2 text-sm text-slate-400">
+        <!-- Daily Focus Stats -->
+        <div
+            class="focusable absolute top-20 right-0 left-0 flex justify-center md:top-8 md:right-8 md:left-auto md:justify-end z-10">
+            <div
+                class="flex items-center gap-2 text-sm text-slate-400 bg-slate-800/50 md:bg-transparent px-4 py-1 rounded-full md:px-0 md:py-0">
                 <i class="fa-solid fa-fire text-accent"></i>
-                <span>Bugünkü Odak: <span id="daily-focus" class="text-accent font-medium">0</span> dk</span>
+                <span class="hidden md:inline">Bugünkü Odak:</span>
+                <span id="daily-focus" class="text-accent font-medium">0</span>
+                <span class="md:hidden">dk</span>
+                <span class="hidden md:inline">dk</span>
             </div>
         </div>
 
@@ -286,6 +303,28 @@
         </div>
     </div>
 
+    <!-- Notification Permission Modal (Soft Prompt) -->
+    <div id="notification-modal" class="hidden fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-800 rounded-3xl p-8 max-w-sm w-full text-center">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent/20 mb-6">
+                <i class="fa-regular fa-bell text-3xl text-accent"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-100 mb-2">Zaman Dolunca Haber Ver?</h3>
+            <p id="notification-modal-text" class="text-slate-400 mb-8">
+                Süre bittiğinde veya mola zamanı geldiğinde sana bildirim gönderebilmem için iznine ihtiyacım var.
+            </p>
+            <div class="flex flex-col gap-3">
+                <button id="enable-notifications-btn" class="btn-accent py-3 rounded-xl font-semibold">
+                    İzin Ver
+                </button>
+                <button id="close-notification-modal-btn"
+                    class="text-slate-500 hover:text-slate-300 py-2 transition-colors">
+                    Şimdi Değil
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Audio Elements -->
     <audio id="audio-rain" loop preload="auto">
         <source src="assets/sounds/rain.mp3" type="audio/mpeg">
@@ -400,6 +439,62 @@
         }
 
         // =====================
+        // Soft Prompt Logic
+        // =====================
+        function updateNotificationIcon() {
+            const icon = document.getElementById('notification-icon');
+            if (!icon) return;
+
+            if (Notification.permission === 'granted') {
+                icon.className = 'fa-solid fa-bell text-accent'; // Active/Granted
+            } else if (Notification.permission === 'denied') {
+                icon.className = 'fa-solid fa-bell-slash text-slate-600'; // Denied
+            } else {
+                icon.className = 'fa-regular fa-bell'; // Default/Prompt needed
+            }
+        }
+
+        function showNotificationPrompt() {
+            // Check current permission state
+            const modalTitle = document.querySelector('#notification-modal h3');
+            const modalText = document.getElementById('notification-modal-text');
+            const actionBtn = document.getElementById('enable-notifications-btn');
+
+            if (Notification.permission === 'granted') {
+                // Already granted
+                return;
+            }
+
+            if (Notification.permission === 'denied') {
+                // Denied state - guide user to settings
+                modalTitle.textContent = "Bildirimler Engelli 😔";
+                modalText.textContent = "Tarayıcı ayarlarından bu site için bildirim engelini kaldırmalısın.";
+                actionBtn.textContent = "Tamam, Anladım";
+                actionBtn.onclick = () => document.getElementById('notification-modal').classList.add('hidden');
+            } else {
+                // Default state - ask for permission
+                modalTitle.textContent = "Zaman Dolunca Haber Ver?";
+                modalText.textContent = "Süre bittiğinde veya mola zamanı geldiğinde sana bildirim gönderebilmem için iznine ihtiyacım var.";
+                actionBtn.textContent = "İzin Ver";
+                actionBtn.onclick = handlePermissionRequest;
+            }
+
+            document.getElementById('notification-modal').classList.remove('hidden');
+        }
+
+        function handlePermissionRequest() {
+            Notification.requestPermission().then(permission => {
+                updateNotificationIcon();
+                document.getElementById('notification-modal').classList.add('hidden');
+
+                if (permission === 'granted') {
+                    // Send a test notification immediately to confirm
+                    sendNotification('Süper! 🎉', 'Bildirimler başarıyla açıldı.');
+                }
+            });
+        }
+
+        // =====================
         // DOM Elements
         // =====================
         const elements = {
@@ -422,7 +517,10 @@
             modalFocusTime: document.getElementById('modal-focus-time'),
             shareBtn: document.getElementById('share-btn'),
             closeModalBtn: document.getElementById('close-modal-btn'),
-            shareCard: document.getElementById('share-card')
+            shareCard: document.getElementById('share-card'),
+            notificationBtn: document.getElementById('notification-btn'),
+            enableNotificationsBtn: document.getElementById('enable-notifications-btn'),
+            closeNotificationModalBtn: document.getElementById('close-notification-modal-btn')
         };
 
         // =====================
@@ -519,7 +617,7 @@
             state.targetEndTime = Date.now() + (state.timeRemaining * MS_PER_SECOND);
 
             // Request notification permission on first start (only once)
-            requestNotificationPermission();
+            // REMOVED for Soft Prompt: requestNotificationPermission();
 
             // Enter focus mode
             elements.app.classList.add('focus-mode');
@@ -825,7 +923,13 @@
             updateModeDisplay();
             updatePomodoroCounter();
             setupStorageSync(); // Enable cross-tab synchronization
-            // Note: Notification permission is requested on first timer start, not here
+            updateNotificationIcon(); // Set initial icon state
+
+            // Event Listeners for Notifications
+            elements.notificationBtn.addEventListener('click', showNotificationPrompt);
+            elements.closeNotificationModalBtn.addEventListener('click', () => {
+                document.getElementById('notification-modal').classList.add('hidden');
+            });
         }
 
         init();

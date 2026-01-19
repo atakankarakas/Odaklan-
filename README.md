@@ -26,8 +26,9 @@ Minimalist Pomodoro zamanlayıcı uygulaması. Odaklanmanızı artırın, üretk
 - **☕ Kafe Sesi** - Kahve dükkanı atmosferi
 - **🔔 Akıllı Ses Yönetimi** - Seans bitince ambient sesler otomatik durur
 
-### Akıllı Bildirimler
-- **🔔 Tarayıcı Bildirimleri** - Mola ve odak değişimlerinde bildirim
+### Akıllı Bildirimler (Soft Prompt)
+- **🔔 Kullanıcı Kontrollü İzin** - "Başla"ya basınca değil, siz istediğinizde bildirim izni istenir (Soft Prompt).
+- **🚫 Engelli Durum Yönetimi** - Tarayıcıdan yanlışlıkla engellerseniz manuel düzeltme rehberi sunar.
 - **🎨 Dinamik Favicon** - Mod değişiminde sekme ikonu değişir
   - 🔵 Turkuaz (Odak) | 🟢 Yeşil (Kısa Mola) | 🟣 Mor (Uzun Mola)
 - **⏱️ Dinamik Sekme Başlığı** - Kalan süre sekme başlığında görünür: `(12:45) 🎯 Odak`
@@ -37,7 +38,7 @@ Minimalist Pomodoro zamanlayıcı uygulaması. Odaklanmanızı artırın, üretk
 - **📊 Günlük Takip** - LocalStorage ile günlük odak sürenizi takip edin
 - **🔄 Sekme Senkronizasyonu** - Birden fazla sekmede açıksa veriler senkronize kalır
 - **📤 Paylaşım Kartı** - Başarınızı PNG olarak indirip sosyal medyada paylaşın
-- **📱 Responsive Tasarım** - iOS Safari dahil tüm cihazlarda mükemmel görünüm
+- **📱 Responsive Tasarım** - iOS Safari dahil tüm cihazlarda mükemmel görünüm (100dvh desteği)
 
 ### Teknik Özellikler
 - **💤 Uyku Modu Dayanıklı** - Bilgisayar uyku moduna girse bile zamanlayıcı doğru çalışır
