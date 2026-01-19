@@ -1,80 +1,82 @@
 # Odaklan! - Premium Pomodoro Timer
 
-**Odaklan!**, modern, estetik ve kullanıcı deneyimini ön planda tutan; "Kupa Odası" (Trophy Room) özelliği ile başarılarınızı sosyal medyada paylaşmanızı sağlayan gelişmiş bir Pomodoro zamanlayıcısıdır.
+**Odaklan!**, modern zamanın dikkat dağınıklığına karşı geliştirilmiş; estetik, manevi derinlikli ve kullanıcı deneyimini merkeze alan yeni nesil bir odaklanma asistanıdır.
 
-![Ekran Görüntüsü](https://via.placeholder.com/800x400?text=Odaklan+Uygulama+Gorseli)
+Standart sayaçların ötesine geçen "Kupa Odası" (Trophy Room), "Akıllı Başlangıç" sistemi ve "Kesintisiz Atmosfer" özellikleri ile çalışmayı bir ritüele dönüştürür.
 
-## ✨ Özellikler
+![Odaklan! Preview](preview.png)
 
-### 🎯 Odaklanma & Zaman Yönetimi
-*   **Klasik Pomodoro Döngüsü:** 25 dk Odak / 5 dk Kısa Mola / 15 dk Uzun Mola.
-*   **Akıllı Bildirimler:** Süre dolduğunda tarayıcı bildirimi ve sekme başlığı yanıp sönmesi.
-*   **Kesintisiz Atmosfer:** Odaklanma sırasında çalabilen Yağmur, Kafe ve **Şömine** sesleri. Mola bildiriminden sonra sesler kaldığı yerden devam eder.
+## ✨ Öne Çıkan Özellikler
 
-### 🏆 Kupa Odası (Trophy Room) - **YENİ!**
-Her odaklanma seansını bir zafere dönüştürün! Seans bittiğinde açılan özel ekranda:
-*   **Hikaye Modu (9:16):** Instagram/Snapchat hikayeleri için dikey tasarım.
-*   **Yatay Mod (16:9):** Twitter/LinkedIn gönderileri için geniş ekran tasarım.
-*   **Canlı Önizleme:** Paylaşmadan önce posterinizin nasıl görüneceğini anlık görün.
-*   **Sözü Değiştir:** Beğenmediğiniz motivasyon sözünü tek tıkla yenileyin.
+### 🏆 Kupa Odası (Trophy Room)
+Her tamamlanan Pomodoro bir zaferdir. Seans sonunda açılan özel ekranda başarınızı taçlandırın:
+*   **Hikaye Modu (9:16):** Instagram ve WhatsApp hikayeleri için optimize edilmiş dikey tasarım.
+*   **Yatay Mod (16:9):** Twitter (X) ve LinkedIn paylaşımları için geniş ekran tasarım.
+*   **Canlı Önizleme:** Paylaşmadan önce posterinizin nasıl görüneceğini anlık olarak izleyin.
+*   **İnteraktif Sözlük:** Beğenmediğiniz motivasyon sözünü tek tıkla yenileyin.
+*   **Tek Tıkla İndir:** Yüksek çözünürlüklü (HD) görsel oluşturma.
 
-### 📜 Seçkin Sözlük
-*   Sadece Türk-İslam medeniyetinin büyüklerinden (Yunus Emre, Mevlana, Fatih Sultan Mehmet, Aliya İzzetbegoviç vb.) ve sahih kaynaklardan derlenmiş, titizlikle seçilmiş motivasyon sözleri.
-*   Atıflar akademik hassasiyetle doğrulanmıştır.
+### 🧠 Akıllı Bildirim Sistemi
+Kullanıcıyı süreçten koparmayan, proaktif bir deneyim:
+*   **Akıllı Başlangıç (Smart Onboarding):** "Başla" tuşuna bastığınızda bildirim izniniz yoksa, sistem sizi nazikçe uyarır ve izin vermeniz için yönlendirir. Böylece süreyi kaçırma riskiniz ortadan kalkar.
+*   **Sistem Kontrolü:** Bildirim ziline tıkladığınızda açılan **"Sistem Aktif ve Hazır! 🫡"** penceresi ile bildirimlerin çalıştığını anında test edebilirsiniz.
+*   **Fresh Alert:** Eski bildirimler üst üste binmez, her yeni uyarı öncekini kapatarak ekranı temiz tutar.
 
-### ⚡ Teknoloji & Performans
-*   **Tailwind CSS:** Hızlı ve modern arayüz tasarımı.
-*   **Vite & PWA Hazır:** (Geliştirme aşamasında)
-*   **html2canvas:** Yüksek kaliteli görsel oluşturma motoru.
-*   **Local Storage:** Günlük odaklanma sürenizi kaydeder, sayfayı yenileseniz bile silinmez.
+### 🌊 Kesintisiz Atmosfer & Sesler
+*   **3 Farklı Mod:** 
+    *   🌧️ **Yağmur:** Huzurlu bir sonbahar günü.
+    *   ☕ **Kafe:** Üretken bir kahve dükkanı ortamı.
+    *   🔥 **Şömine:** Sıcacık odun çıtırtıları (Seamless Loop).
+*   **Auto-Resume:** Mola bildirimi gelse bile, bildirim bittiği an veya sayacı tekrar başlattığınız an atmosfer sesi **kaldığı yerden devam eder.** Sessizlik oluşmaz.
 
----
-
-## 🚀 Kurulum
-
-Bu proje, herhangi bir sunucu kurulumu gerektirmeden, doğrudan tarayıcıda çalışabilir.
-
-1.  Projeyi indirin (`git clone` veya ZIP indir).
-2.  `index.html` dosyasını çift tıklayarak tarayıcınızda açın.
-3.  **Önemli:** `assets/sounds/` klasöründe ses dosyalarının (`fireplace.mp3`, `rain.mp3`, `cafe.mp3`) bulunduğundan emin olun.
+### 📜 Seçkin Sözlük & Manevi Derinlik
+*   Tamamen yerli ve manevi değerlere uygun kürasyon.
+*   **Kaynaklar:** Yunus Emre, Mevlana, Fatih Sultan Mehmet, Şeyh Edebali, Aliya İzzetbegoviç ve Hadis-i Şerifler.
+*   *Aristoteles vb. batı kaynaklı veya kaynağı şüpheli sözler sistemden temizlenmiştir.*
 
 ---
 
-## 📂 Proje Yapısı
+## 🚀 Kurulum & Kullanım
 
-```
-Odaklan/
-├── index.html          # Tüm uygulama mantığı ve tasarımı (Single File)
-├── assets/
-│   └── sounds/         # Ses dosyaları
-│       ├── rain.mp3
-│       ├── cafe.mp3
-│       └── fireplace.mp3
-├── README.md           # Proje dokümantasyonu
-```
+Bu proje, herhangi bir karmaşık sunucu kurulumu gerektirmez.
+
+1.  **İndirin:** Proje dosyalarını bilgisayarınıza indirin.
+2.  **Ses Dosyalarını Kontrol Edin:** `assets/sounds/` klasöründe şu dosyaların olduğundan emin olun:
+    *   `fireplace.mp3`
+    *   `rain.mp3`
+    *   `cafe.mp3`
+3.  **Çalıştırın:** `index.html` dosyasını çift tıklayarak favori tarayıcınızda (Chrome önerilir) açın.
 
 ---
 
 ## ⌨️ Klavye Kısayolları
 
-*   `Space`: Başlat / Duraklat
-*   `R`: Sayacı Sıfırla (Reset)
-*   `ESC`: Molayı Bitir / Pencereyi Kapat
+Profesyoneller için hızlandırılmış kontrol:
+
+| Tuş | İşlev |
+| --- | --- |
+| **Space** | Başlat / Duraklat |
+| **R** | Sayacı Sıfırla (Reset) |
+| **ESC** | Molayı Bitir / Pencereyi Kapat |
 
 ---
 
-## 🤝 Katkıda Bulunma
+## 📂 Proje Mimarisi
 
-Bu proje açık kaynaklıdır. Geliştirmek için:
-1.  Forklayın.
-2.  Yeni bir özellik dalı (branch) oluşturun.
-3.  Değişikliklerinizi yapın ve PR gönderin.
-
----
-
-## 📝 Lisans
-
-MIT Lisansı ile lisanslanmıştır. Özgürce kullanabilir ve dağıtabilirsiniz.
+```
+Odaklan/
+├── index.html          # Core Logic (HTML5, Tailwind, JS)
+├── README.md           # Dokümantasyon
+└── assets/
+    └── sounds/         # Atmosfer Sesleri
+```
 
 ---
-*İmkanın sınırını görmek için imkansızı denemek lazım.* — **Fatih Sultan Mehmet**
+
+## 👨‍💻 Geliştirici
+
+**Atakan Karakaş**
+*Design & Code*
+
+---
+*İmkanın sınırını görmek için imkansızı denemek lazım.*
