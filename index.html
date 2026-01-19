@@ -96,14 +96,33 @@
         }
 
         /* Sound Button Active State */
+        /* Button Active State - Forced Specificity */
         .sound-btn.active {
-            background-color: #00B7C6;
-            color: #0f172a;
+            color: #00B7C6 !important;
+            background-color: rgba(0, 183, 198, 0.15) !important;
+            border: 1px solid rgba(0, 183, 198, 0.3) !important;
+            box-shadow: 0 0 15px rgba(0, 183, 198, 0.2);
+        }
+
+        /* Prevent large elements from blocking clicks */
+        .pointer-events-none-safe {
+            pointer-events: none;
+        }
+
+        /* Ensure buttons are always clickable */
+        button {
+            pointer-events: auto;
+            position: relative;
+            z-index: 20;
+            /* Higher than containers */
         }
 
         /* Progress Ring */
         .progress-ring {
             transform: rotate(-90deg);
+            pointer-events: none;
+            /* Critical for mobile clicks */
+            filter: drop-shadow(0 0 10px rgba(0, 183, 198, 0.1));
         }
 
         .progress-ring__circle {
@@ -192,7 +211,7 @@
                 </svg>
 
                 <!-- Timer Text -->
-                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                     <span id="mode-indicator" class="text-sm font-medium text-accent mb-2 uppercase tracking-widest">
                         Odak
                     </span>
