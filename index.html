@@ -162,57 +162,49 @@
 <body class="bg-slate-900 text-slate-200">
 
     <!-- Main Container -->
-    <!-- Main Container -->
-    <div id="app" class="min-h-screen flex flex-col items-center relative px-4 py-6 overflow-y-auto">
+    <div id="app" class="min-h-screen flex flex-col items-center relative px-4 py-8 overflow-y-auto">
 
         <!-- Top Bar: Header & Stats -->
-        <!-- Changed from absolute to flex items to prevent overlap -->
-        <div class="w-full max-w-5xl flex flex-col md:flex-row justify-between items-center z-10 gap-4 mb-8 shrink-0">
+        <!-- Simplified for Click Safety: Standard Flex Column -->
+        <div class="w-full max-w-lg flex flex-col items-center gap-4 mb-2 shrink-0 relative z-20">
 
-            <!-- Left: Bell Icon -->
-            <div class="flex items-center justify-start w-full md:w-auto relative z-50">
-                <button id="notification-btn" class="text-slate-400 hover:text-accent transition-colors p-2"
+            <!-- Top Row: Bell and Stats -->
+            <div class="w-full flex items-center justify-between relative z-30 pointer-events-none">
+                <!-- Bell Icon (Explicitly Clickable) -->
+                <button id="notification-btn"
+                    class="p-3 -ml-2 text-slate-400 hover:text-accent transition-colors relative z-50 pointer-events-auto active:scale-95 touch-manipulation"
                     title="Bildirim Ayarları">
-                    <i id="notification-icon" class="fa-regular fa-bell text-xl"></i>
+                    <i id="notification-icon" class="fa-regular fa-bell text-2xl"></i>
                 </button>
-            </div>
 
-            <!-- Center: Logo -->
-            <h1
-                class="text-3xl font-semibold tracking-tight text-center md:absolute md:left-1/2 md:-translate-x-1/2 pointer-events-none order-first md:order-none w-auto max-w-[80vw]">
-                <span class="text-accent">Odaklan</span><span class="text-slate-400">!</span>
-            </h1>
-
-            <!-- Right: Stats -->
-            <div class="flex items-center justify-center md:justify-end w-full md:w-auto relative z-20">
+                <!-- Stats (Explicitly Clickable) -->
                 <div
-                    class="flex items-center gap-2 text-sm text-slate-400 bg-slate-800/50 px-4 py-2 rounded-full border border-slate-700/30">
+                    class="pointer-events-auto relative z-50 flex items-center gap-2 text-sm text-slate-400 bg-slate-800/50 px-3 py-1.5 rounded-full border border-slate-700/30">
                     <i class="fa-solid fa-fire text-accent text-sm"></i>
-                    <span class="hidden sm:inline">Bugünkü Odak:</span>
                     <span id="daily-focus" class="text-accent font-medium text-base">0</span>
-                    <span>dk</span>
+                    <span class="text-xs">dk</span>
                 </div>
             </div>
+
+            <!-- Title (Standard Flow - No Absolute) -->
+            <h1 class="text-4xl font-bold tracking-tight text-center text-slate-200 pointer-events-none select-none">
+                <span class="text-accent">Odaklan</span><span class="text-slate-400">!</span>
+            </h1>
         </div>
 
         <!-- Hero Timer Section -->
-        <main class="always-visible flex flex-col items-center justify-center flex-1 w-full relative z-0">
+        <main class="always-visible flex flex-col items-center justify-center flex-1 w-full relative z-10 -mt-4">
 
-            <!-- Timer Display with Progress Ring -->
-            <!-- Add pointer-events-none to container to prevent overlap blocking -->
-            <div class="relative mb-12 pointer-events-none">
-                <!-- Progress Ring SVG -->
+            <!-- Timer Display -->
+            <div class="relative mb-12 pointer-events-none select-none scale-90 md:scale-100">
                 <svg class="progress-ring w-80 h-80 md:w-96 md:h-96" viewBox="0 0 400 400">
-                    <!-- Background Circle -->
                     <circle cx="200" cy="200" r="180" fill="none" stroke="#1e293b" stroke-width="8" />
-                    <!-- Progress Circle -->
                     <circle id="progress-circle" class="progress-ring__circle" cx="200" cy="200" r="180" fill="none"
                         stroke="#00B7C6" stroke-width="8" stroke-linecap="round" stroke-dasharray="1131"
                         stroke-dashoffset="0" />
                 </svg>
 
-                <!-- Timer Text -->
-                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                <div class="absolute inset-0 flex flex-col items-center justify-center">
                     <span id="mode-indicator" class="text-sm font-medium text-accent mb-2 uppercase tracking-widest">
                         Odak
                     </span>
@@ -226,11 +218,10 @@
                 </div>
             </div>
 
-            <!-- Control Buttons -->
-            <!-- Boost Z-Index to 50 to Force Clickability -->
-            <div class="always-visible flex gap-4 relative z-50 pointer-events-auto">
+            <!-- Start Button (High Margin & Index) -->
+            <div class="always-visible flex gap-4 relative z-50 pointer-events-auto mb-6">
                 <button id="start-btn"
-                    class="btn-accent px-10 py-4 rounded-full text-lg font-semibold tracking-wide shadow-lg shadow-accent/20">
+                    class="btn-accent px-12 py-5 rounded-full text-xl font-bold tracking-wide shadow-xl shadow-accent/20 active:scale-95 transition-transform touch-manipulation cursor-pointer">
                     <i class="fa-solid fa-play mr-2"></i>
                     Başla
                 </button>
@@ -294,53 +285,57 @@
 
     <!-- Completion Modal (The Trophy Room) -->
     <div id="completion-modal" class="hidden fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4">
-        <div class="max-w-md w-full bg-slate-800 rounded-3xl overflow-hidden flex flex-col max-h-[90vh]">
+        <div
+            class="max-w-md w-full bg-slate-800 rounded-3xl flex flex-col max-h-[85vh] overflow-hidden shadow-2xl ring-1 ring-white/10">
 
-            <!-- Modal Header -->
-            <div class="p-6 pb-2 text-center">
-                <div class="inline-flex items-center justify-center gap-2 mb-1">
-                    <i class="fa-solid fa-fire text-accent text-xl"></i>
-                    <span class="text-slate-400 font-medium tracking-wide text-sm uppercase">Görev Tamamlandı</span>
-                </div>
-                <h2 class="text-3xl font-bold text-white tracking-tight"><span id="modal-focus-time">25</span> dk
-                    Odaklandın!</h2>
-            </div>
-
-            <!-- Tabs (Segmented Control) -->
-            <div class="px-6 py-2">
-                <div class="flex p-1 bg-slate-700/50 rounded-xl relative">
-                    <!-- Tab Background Pill (Animated via JS logic if needed, or simple toggle) -->
-                    <button id="tab-story"
-                        class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-bold transition-all bg-accent text-slate-900 shadow-lg">
-                        <i class="fa-brands fa-instagram text-lg"></i>
-                        HİKAYE
-                    </button>
-                    <button id="tab-feed"
-                        class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-medium text-slate-400 hover:text-slate-200 transition-all">
-                        <i class="fa-regular fa-image text-lg"></i>
-                        YATAY
-                    </button>
-                </div>
-            </div>
-
-            <!-- Preview Area (The Mirror) -->
-            <div
-                class="flex-1 overflow-y-auto overflow-x-hidden p-6 bg-slate-800 relative flex flex-col items-center justify-center min-h-[400px]">
-
-                <!-- Container for sizing stability -->
-                <div id="preview-wrapper" class="relative transition-all duration-300 ease-out"
-                    style="will-change: transform, height;">
-                    <!-- The Mirrored Content will be injected here -->
-                    <!-- It will be scaled via CSS transform -->
+            <!-- Modal Content Wrapper (Scrollable) -->
+            <div class="overflow-y-auto flex-1 custom-scrollbar">
+                <!-- Modal Header -->
+                <div class="p-6 pb-2 text-center sticky top-0 bg-slate-800 z-10">
+                    <div class="inline-flex items-center justify-center gap-2 mb-1">
+                        <i class="fa-solid fa-fire text-accent text-xl"></i>
+                        <span class="text-slate-400 font-medium tracking-wide text-sm uppercase">Görev Tamamlandı</span>
+                    </div>
+                    <h2 class="text-3xl font-bold text-white tracking-tight"><span id="modal-focus-time">25</span> dk
+                        Odaklandın!</h2>
                 </div>
 
-                <!-- Loading / Placeholder State -->
-                <div id="preview-loading"
-                    class="absolute inset-0 flex flex-col items-center justify-center text-slate-500 gap-3 hidden">
-                    <i class="fa-solid fa-circle-notch fa-spin text-3xl text-accent"></i>
-                    <span class="text-sm">Önizleme Hazırlanıyor...</span>
+                <!-- Tabs (Segmented Control) -->
+                <div class="px-6 py-2">
+                    <div class="flex p-1 bg-slate-700/50 rounded-xl relative">
+                        <!-- Tab Background Pill (Animated via JS logic if needed, or simple toggle) -->
+                        <button id="tab-story"
+                            class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-bold transition-all bg-accent text-slate-900 shadow-lg">
+                            <i class="fa-brands fa-instagram text-lg"></i>
+                            HİKAYE
+                        </button>
+                        <button id="tab-feed"
+                            class="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-medium text-slate-400 hover:text-slate-200 transition-all">
+                            <i class="fa-regular fa-image text-lg"></i>
+                            YATAY
+                        </button>
+                    </div>
                 </div>
-            </div>
+
+                <!-- Preview Area (The Mirror) -->
+                <div
+                    class="flex-1 overflow-y-auto overflow-x-hidden p-6 bg-slate-800 relative flex flex-col items-center justify-center min-h-[400px]">
+
+                    <!-- Container for sizing stability -->
+                    <div id="preview-wrapper" class="relative transition-all duration-300 ease-out"
+                        style="will-change: transform, height;">
+                        <!-- The Mirrored Content will be injected here -->
+                        <!-- It will be scaled via CSS transform -->
+                    </div>
+
+                    <!-- Loading / Placeholder State -->
+                    <div id="preview-loading"
+                        class="absolute inset-0 flex flex-col items-center justify-center text-slate-500 gap-3 hidden">
+                        <i class="fa-solid fa-circle-notch fa-spin text-3xl text-accent"></i>
+                        <span class="text-sm">Önizleme Hazırlanıyor...</span>
+                    </div>
+                </div>
+            </div> <!-- End of Scroll Wrapper -->
 
             <!-- Action Bar -->
             <div class="p-6 bg-slate-800 border-t border-slate-700/50 flex flex-col gap-3 z-10">
