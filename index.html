@@ -9,6 +9,19 @@
     <link id="favicon" rel="icon" type="image/svg+xml"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2300B7C6'/><text x='50' y='62' font-size='40' text-anchor='middle' fill='white'>O</text></svg>">
 
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- iOS PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Odaklan!">
+    <link rel="apple-touch-icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%230f172a'/><circle cx='90' cy='90' r='60' fill='none' stroke='%2300B7C6' stroke-width='8'/><text x='90' y='105' font-size='50' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%2300B7C6'>O!</text></svg>">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#0f172a">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -161,6 +174,39 @@
 
 <body class="bg-slate-900 text-slate-200">
 
+    <!-- iOS Install Banner (Only shows on iOS Safari, not in PWA mode) -->
+    <div id="ios-install-banner"
+        class="hidden fixed bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900 via-slate-800 to-slate-800/95 p-4 pb-6 z-[100] border-t border-accent/30 backdrop-blur-sm">
+        <div class="max-w-md mx-auto">
+            <div class="flex items-start gap-3">
+                <div class="shrink-0 w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center">
+                    <i class="fa-solid fa-bell text-accent text-xl"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-bold text-white text-sm mb-1">Bildirim Almak İster misin?</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-3">
+                        iOS'ta bildirim alabilmek için uygulamayı ana ekrana eklemelisin.
+                    </p>
+                    <div class="flex items-center gap-2 text-xs text-slate-300 bg-slate-700/50 rounded-lg p-2">
+                        <span class="flex items-center gap-1">
+                            <i class="fa-solid fa-arrow-up-from-bracket text-accent"></i>
+                            Paylaş
+                        </span>
+                        <i class="fa-solid fa-chevron-right text-slate-500 text-[10px]"></i>
+                        <span class="flex items-center gap-1">
+                            <i class="fa-solid fa-plus-square text-accent"></i>
+                            Ana Ekrana Ekle
+                        </span>
+                    </div>
+                </div>
+                <button id="close-ios-banner"
+                    class="shrink-0 w-8 h-8 flex items-center justify-center text-slate-500 hover:text-white">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Main Container -->
     <div id="app" class="min-h-screen flex flex-col items-center relative px-4 py-8 overflow-y-auto">
 
@@ -193,24 +239,24 @@
         <main class="always-visible flex flex-col items-center justify-center flex-1 w-full relative z-10">
 
             <!-- Mode Selector - Clean, always visible text -->
-            <div class="flex bg-slate-800/30 rounded-full p-0.5 mb-4 text-xs">
+            <div class="flex bg-slate-800/40 rounded-full p-1 mb-6 text-xs md:text-sm border border-slate-700/30">
                 <button id="mode-focus"
-                    class="mode-btn flex items-center gap-1.5 py-1.5 px-4 rounded-full font-semibold transition-all bg-accent text-slate-900"
+                    class="mode-btn flex items-center gap-2 py-2 px-4 md:px-5 rounded-full font-semibold transition-all bg-accent text-slate-900"
                     data-mode="focus">
                     <i class="fa-solid fa-bullseye"></i>
-                    Odak
+                    <span>Odak</span>
                 </button>
                 <button id="mode-short"
-                    class="mode-btn flex items-center gap-1.5 py-1.5 px-3 rounded-full font-medium text-slate-400 hover:text-slate-200 transition-all"
+                    class="mode-btn flex items-center gap-2 py-2 px-4 md:px-5 rounded-full font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 transition-all"
                     data-mode="shortBreak">
                     <i class="fa-solid fa-leaf"></i>
-                    Kısa
+                    <span>Kısa</span>
                 </button>
                 <button id="mode-long"
-                    class="mode-btn flex items-center gap-1.5 py-1.5 px-3 rounded-full font-medium text-slate-400 hover:text-slate-200 transition-all"
+                    class="mode-btn flex items-center gap-2 py-2 px-4 md:px-5 rounded-full font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 transition-all"
                     data-mode="longBreak">
                     <i class="fa-solid fa-bed"></i>
-                    Uzun
+                    <span>Uzun</span>
                 </button>
             </div>
 
@@ -1557,6 +1603,21 @@
             elements.closeNotificationModalBtn.addEventListener('click', () => {
                 document.getElementById('notification-modal').classList.add('hidden');
             });
+
+            // iOS Install Banner Logic
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+            const iosBannerDismissed = localStorage.getItem('ios_banner_dismissed');
+
+            if (isIOS && !isInStandaloneMode && !iosBannerDismissed) {
+                const iosBanner = document.getElementById('ios-install-banner');
+                iosBanner.classList.remove('hidden');
+
+                document.getElementById('close-ios-banner').addEventListener('click', () => {
+                    iosBanner.classList.add('hidden');
+                    localStorage.setItem('ios_banner_dismissed', 'true');
+                });
+            }
         }
 
         init();
