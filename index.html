@@ -1620,22 +1620,30 @@
             alert(`Debug:\niOS: ${isIOS}\nStandalone: ${isInStandaloneMode}\nDismissed: ${iosBannerDismissed}\nUA: ${navigator.userAgent}`);
 
             if (isIOS && !isInStandaloneMode && !iosBannerDismissed) {
-                // Show after a small delay for better UX
                 setTimeout(() => {
                     const iosBanner = document.getElementById('ios-install-banner');
-                    iosBanner.classList.remove('hidden');
+                    if (iosBanner) iosBanner.classList.remove('hidden');
                 }, 2000);
 
-                document.getElementById('close-ios-banner').addEventListener('click', () => {
-                    document.getElementById('ios-install-banner').classList.add('hidden');
-                    localStorage.setItem('ios_banner_dismissed_v1', 'true');
-                });
+                const closeBtn = document.getElementById('close-ios-banner');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', () => {
+                        document.getElementById('ios-install-banner').classList.add('hidden');
+                        localStorage.setItem('ios_banner_dismissed_v1', 'true');
+                    });
+                }
             }
         }
 
-        init();
+        // Wrap init in try-catch to catch errors
+        try {
+            init();
+        } catch (e) {
+            alert("Init Error: " + e.message);
+        }
     </script>
-
 </body>
+
+</html>
 
 </html>
