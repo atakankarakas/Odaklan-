@@ -773,6 +773,21 @@
                 </div>
             </div>
 
+            <!-- Monthly Comparison Banner -->
+            <div id="monthly-comparison-banner" class="mx-3 sm:mx-4 mt-3 p-3 rounded-xl bg-gradient-to-r from-accent/10 to-slate-700/30 border border-accent/20">
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <span id="monthly-comparison-emoji" class="text-2xl sm:text-3xl">🌟</span>
+                    <div class="flex-1 min-w-0">
+                        <div class="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider mb-0.5" id="monthly-comparison-title">Bu Ay vs Geçen Ay</div>
+                        <p id="monthly-comparison-message" class="text-xs sm:text-sm text-white font-medium">Bu ay harika bir başlangıç yaptın!</p>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between mt-2 pt-2 border-t border-slate-700/50 text-[10px] sm:text-xs">
+                    <span class="text-slate-400">Bu ay: <span id="monthly-current-total" class="text-accent font-medium">0</span> dk</span>
+                    <span class="text-slate-500">Geçen ay: <span id="monthly-previous-total" class="text-slate-400">0</span> dk</span>
+                </div>
+            </div>
+
             <!-- Weekly History -->
             <div class="flex-1 overflow-y-auto p-3 sm:p-4">
                 <h3 class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 sm:mb-3">Son 7 Gün</h3>
@@ -1417,6 +1432,156 @@
         }
 
         // =====================
+        // Monthly Stats Tracking for Motivation Analysis
+        // =====================
+        function getMonthKey(date = new Date()) {
+            return `odaklan_monthly_${date.getFullYear()}_${date.getMonth()}`;
+        }
+
+        function getMonthlyStats(date = new Date()) {
+            const key = getMonthKey(date);
+            const stored = localStorage.getItem(key);
+            return stored ? JSON.parse(stored) : { totalMinutes: 0, totalPomodoros: 0, daysActive: 0 };
+        }
+
+        function saveMonthlyStats(stats, date = new Date()) {
+            const key = getMonthKey(date);
+            localStorage.setItem(key, JSON.stringify(stats));
+        }
+
+        function updateMonthlyStats() {
+            // Get or create current month's stats
+            const currentStats = getMonthlyStats();
+            const today = new Date().getDate();
+            
+            // Track unique active days using a Set stored as array
+            let activeDays = currentStats.activeDays || [];
+            if (!activeDays.includes(today)) {
+                activeDays.push(today);
+            }
+            
+            // Update the stats
+            currentStats.totalMinutes = getCurrentMonthTotalMinutes();
+            currentStats.totalPomodoros = getCurrentMonthTotalPomodoros();
+            currentStats.daysActive = activeDays.length;
+            currentStats.activeDays = activeDays;
+            currentStats.lastUpdated = new Date().toISOString();
+            
+            saveMonthlyStats(currentStats);
+        }
+
+        function getCurrentMonthTotalMinutes() {
+            // Sum all daily focus times for current month from localStorage
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            let total = 0;
+            
+            // Check all possible days in current month
+            for (let day = 1; day <= 31; day++) {
+                const key = `odaklan_focus_${year}_${month}_${day}`;
+                const stored = localStorage.getItem(key);
+                if (stored) {
+                    total += parseInt(stored, 10) || 0;
+                }
+            }
+            return total;
+        }
+
+        function getCurrentMonthTotalPomodoros() {
+            // Sum all daily pomodoro counts for current month from localStorage
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            let total = 0;
+            
+            // Check all possible days in current month
+            for (let day = 1; day <= 31; day++) {
+                const key = `odaklan_pomodoro_${year}_${month}_${day}`;
+                const stored = localStorage.getItem(key);
+                if (stored) {
+                    total += parseInt(stored, 10) || 0;
+                }
+            }
+            return total;
+        }
+
+        function getPreviousMonthStats() {
+            const now = new Date();
+            // Go to previous month
+            const prevMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+            return getMonthlyStats(prevMonth);
+        }
+
+        function getMonthlyComparisonMessage() {
+            const currentStats = {
+                totalMinutes: getCurrentMonthTotalMinutes(),
+                totalPomodoros: getCurrentMonthTotalPomodoros()
+            };
+            const prevStats = getPreviousMonthStats();
+            
+            // If no previous month data, give encouraging message
+            if (!prevStats.totalMinutes || prevStats.totalMinutes === 0) {
+                if (currentStats.totalMinutes > 0) {
+                    return {
+                        message: "Bu ay harika bir başlangıç yaptın! 🚀",
+                        emoji: "🌟",
+                        type: "neutral"
+                    };
+                }
+                return {
+                    message: "İlk odaklanma seansını tamamla!",
+                    emoji: "💪",
+                    type: "neutral"
+                };
+            }
+            
+            // Calculate percentage change
+            const percentChange = ((currentStats.totalMinutes - prevStats.totalMinutes) / prevStats.totalMinutes) * 100;
+            
+            // Get current day of month to estimate progress
+            const dayOfMonth = new Date().getDate();
+            const daysInMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
+            const monthProgress = dayOfMonth / daysInMonth;
+            
+            // Expected minutes by this point in month (linear projection)
+            const expectedMinutes = prevStats.totalMinutes * monthProgress;
+            const paceComparison = ((currentStats.totalMinutes - expectedMinutes) / expectedMinutes) * 100;
+            
+            if (paceComparison > 20) {
+                return {
+                    message: `Geçen ayın %${Math.round(paceComparison)} üstünde gidiyorsun! 🔥`,
+                    emoji: "🏆",
+                    type: "positive"
+                };
+            } else if (paceComparison > 0) {
+                return {
+                    message: "Geçen ayın temposunu yakaladın, böyle devam! 💪",
+                    emoji: "✅",
+                    type: "positive"
+                };
+            } else if (paceComparison > -20) {
+                return {
+                    message: "Geçen aya yetişmek için biraz daha çalışmalısın 📈",
+                    emoji: "⏰",
+                    type: "warning"
+                };
+            } else {
+                return {
+                    message: "Geçen ay daha aktiftin, hadi tekrar ivme kazan! 🚀",
+                    emoji: "💡",
+                    type: "warning"
+                };
+            }
+        }
+
+        function formatMonthName(date = new Date()) {
+            const months = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 
+                           'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
+            return months[date.getMonth()];
+        }
+
+        // =====================
         // Timer Functions
         // =====================
         function formatTime(seconds) {
@@ -1698,6 +1863,9 @@
             const trimmed = {};
             dates.forEach(date => trimmed[date] = history[date]);
             localStorage.setItem('odaklan_weekly_history', JSON.stringify(trimmed));
+            
+            // Also update monthly stats
+            updateMonthlyStats();
         }
 
         function formatDate(dateStr) {
@@ -1710,6 +1878,9 @@
             // Update today's stats
             elements.statsTodayTime.textContent = state.dailyFocusMinutes;
             elements.statsTodayPomodoros.textContent = state.pomodoroCount;
+
+            // Update monthly comparison
+            updateMonthlyComparisonUI();
 
             // Populate weekly history
             const history = getWeeklyHistory();
@@ -1739,6 +1910,33 @@
             }).join('');
 
             elements.statsModal.classList.remove('hidden');
+        }
+
+        function updateMonthlyComparisonUI() {
+            const comparison = getMonthlyComparisonMessage();
+            const currentTotal = getCurrentMonthTotalMinutes();
+            const prevStats = getPreviousMonthStats();
+            
+            // Update the banner elements
+            document.getElementById('monthly-comparison-emoji').textContent = comparison.emoji;
+            document.getElementById('monthly-comparison-message').textContent = comparison.message;
+            document.getElementById('monthly-current-total').textContent = currentTotal;
+            document.getElementById('monthly-previous-total').textContent = prevStats.totalMinutes || 0;
+            
+            // Update title with current month name
+            document.getElementById('monthly-comparison-title').textContent = formatMonthName() + ' vs Geçen Ay';
+            
+            // Style based on type
+            const banner = document.getElementById('monthly-comparison-banner');
+            banner.className = 'mx-3 sm:mx-4 mt-3 p-3 rounded-xl border';
+            
+            if (comparison.type === 'positive') {
+                banner.classList.add('bg-gradient-to-r', 'from-green-500/10', 'to-slate-700/30', 'border-green-500/20');
+            } else if (comparison.type === 'warning') {
+                banner.classList.add('bg-gradient-to-r', 'from-yellow-500/10', 'to-slate-700/30', 'border-yellow-500/20');
+            } else {
+                banner.classList.add('bg-gradient-to-r', 'from-accent/10', 'to-slate-700/30', 'border-accent/20');
+            }
         }
 
         function hideStatsModal() {
@@ -1939,10 +2137,25 @@
         async function registerServiceWorker() {
             if ('serviceWorker' in navigator) {
                 try {
-                    const registration = await navigator.serviceWorker.register('/sw.js', {
-                        scope: '/'
+                    // Use relative path for GitHub Pages subdirectory compatibility
+                    const registration = await navigator.serviceWorker.register('./sw.js', {
+                        scope: './'
                     });
                     console.log('Service Worker registered successfully:', registration.scope);
+                    
+                    // Listen for updates from the Service Worker
+                    navigator.serviceWorker.addEventListener('message', (event) => {
+                        if (event.data && event.data.type === 'SW_UPDATED') {
+                            console.log('New version available:', event.data.version);
+                            // Show a subtle update notification to user
+                            showUpdateAvailableToast();
+                        }
+                    });
+                    
+                    // Check for updates periodically (every 30 minutes)
+                    setInterval(() => {
+                        registration.update();
+                    }, 30 * 60 * 1000);
                     
                     // Check for updates
                     registration.addEventListener('updatefound', () => {
@@ -1950,6 +2163,7 @@
                         newWorker.addEventListener('statechange', () => {
                             if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                                 console.log('New content available, please refresh.');
+                                showUpdateAvailableToast();
                             }
                         });
                     });
@@ -1961,6 +2175,25 @@
                 }
             }
             return null;
+        }
+        
+        // Show subtle toast when update is available
+        function showUpdateAvailableToast() {
+            // Only show once per session
+            if (window.updateToastShown) return;
+            window.updateToastShown = true;
+            
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-accent text-slate-900 px-4 py-2 rounded-full text-sm font-medium shadow-lg z-50 cursor-pointer animate-bounce';
+            toast.innerHTML = '<i class="fa-solid fa-arrow-rotate-right mr-2"></i>Güncelleme var! Tıkla ve yenile.';
+            toast.onclick = () => window.location.reload();
+            document.body.appendChild(toast);
+            
+            // Auto-hide after 10 seconds
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'transition-opacity');
+                setTimeout(() => toast.remove(), 500);
+            }, 10000);
         }
         
         function init() {
@@ -1983,18 +2216,29 @@
             // iOS Install Banner Logic - Enhanced
             const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
             const isAndroid = /Android/.test(navigator.userAgent);
-            const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+            // Check both media query and Safari-specific standalone property
+            const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches 
+                                       || window.navigator.standalone === true
+                                       || document.referrer.includes('android-app://');
             const iosBannerDismissed = localStorage.getItem('ios_banner_dismissed');
+            
+            // Debug log for PWA detection
+            console.log('PWA Detection:', { isIOS, isAndroid, isInStandaloneMode, standalone: window.navigator.standalone });
 
-            // Show iOS banner only when not in standalone mode
+            // Show iOS banner only when: iOS Safari, not in standalone PWA mode, and not previously dismissed
             if (isIOS && !isInStandaloneMode && !iosBannerDismissed) {
                 const iosBanner = document.getElementById('ios-install-banner');
-                iosBanner.classList.remove('hidden');
-
-                document.getElementById('close-ios-banner').addEventListener('click', () => {
-                    iosBanner.classList.add('hidden');
-                    localStorage.setItem('ios_banner_dismissed', 'true');
-                });
+                if (iosBanner) {
+                    iosBanner.classList.remove('hidden');
+                    
+                    const closeBtn = document.getElementById('close-ios-banner');
+                    if (closeBtn) {
+                        closeBtn.addEventListener('click', () => {
+                            iosBanner.classList.add('hidden');
+                            localStorage.setItem('ios_banner_dismissed', 'true');
+                        });
+                    }
+                }
             }
 
             // Android: Auto-request notification permission on first visit
