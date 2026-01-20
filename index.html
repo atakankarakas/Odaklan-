@@ -1613,8 +1613,11 @@
             // Changed key to v1 to force-show it for you again (resetting history)
             const iosBannerDismissed = localStorage.getItem('ios_banner_dismissed_v1');
 
-            // Console log for debugging (visible if you connect to computer)
+            // Console log for debugging
             console.log("iOS Check:", { isIOS, isInStandaloneMode, iosBannerDismissed });
+
+            // WRITTEN FOR DEBUGGING: TEMPORARY ALERT
+            alert(`Debug:\niOS: ${isIOS}\nStandalone: ${isInStandaloneMode}\nDismissed: ${iosBannerDismissed}\nUA: ${navigator.userAgent}`);
 
             if (isIOS && !isInStandaloneMode && !iosBannerDismissed) {
                 // Show after a small delay for better UX
