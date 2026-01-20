@@ -12,12 +12,25 @@
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
 
-    <!-- iOS PWA Meta Tags -->
+    <!-- iOS PWA Meta Tags - Enhanced for notifications -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Odaklan!">
-    <link rel="apple-touch-icon"
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" sizes="180x180"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%230f172a'/><circle cx='90' cy='90' r='60' fill='none' stroke='%2300B7C6' stroke-width='8'/><text x='90' y='105' font-size='50' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%2300B7C6'>O!</text></svg>">
+    <link rel="apple-touch-icon" sizes="152x152"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 152 152'><rect width='152' height='152' rx='30' fill='%230f172a'/><circle cx='76' cy='76' r='50' fill='none' stroke='%2300B7C6' stroke-width='6'/><text x='76' y='90' font-size='42' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%2300B7C6'>O!</text></svg>">
+    <link rel="apple-touch-icon" sizes="120x120"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'><rect width='120' height='120' rx='25' fill='%230f172a'/><circle cx='60' cy='60' r='40' fill='none' stroke='%2300B7C6' stroke-width='5'/><text x='60' y='72' font-size='35' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%2300B7C6'>O!</text></svg>">
+    
+    <!-- iOS Splash Screens -->
+    <link rel="apple-touch-startup-image" media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1290 2796'><rect width='1290' height='2796' fill='%230f172a'/><circle cx='645' cy='1398' r='200' fill='none' stroke='%2300B7C6' stroke-width='12'/><text x='645' y='1440' font-size='150' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%2300B7C6'>O!</text></svg>">
+    <link rel="apple-touch-startup-image" media="screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3)"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1179 2556'><rect width='1179' height='2556' fill='%230f172a'/><circle cx='589' cy='1278' r='180' fill='none' stroke='%2300B7C6' stroke-width='10'/><text x='589' y='1320' font-size='140' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%2300B7C6'>O!</text></svg>">
+    <link rel="apple-touch-startup-image" media="screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1170 2532'><rect width='1170' height='2532' fill='%230f172a'/><circle cx='585' cy='1266' r='180' fill='none' stroke='%2300B7C6' stroke-width='10'/><text x='585' y='1308' font-size='140' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%2300B7C6'>O!</text></svg>">
 
     <!-- Theme Color -->
     <meta name="theme-color" content="#0f172a">
@@ -169,100 +182,421 @@
         .pulse-animation {
             animation: pulse-accent 2s infinite;
         }
+
+        /* ================== */
+        /* RESPONSIVE DESIGN  */
+        /* ================== */
+        
+        /* Mobile First Base Styles */
+        .app-container {
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            padding-top: env(safe-area-inset-top, 1rem);
+            padding-bottom: env(safe-area-inset-bottom, 1rem);
+        }
+
+        /* Desktop Enhancement - Large Screens */
+        @media (min-width: 768px) {
+            .app-container {
+                padding: 2rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .app-container {
+                padding: 2rem 4rem;
+                justify-content: center;
+            }
+            
+            /* Two-column layout for wide screens */
+            .desktop-layout {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 3rem;
+                max-width: 1400px;
+                width: 100%;
+                align-items: center;
+            }
+            
+            .timer-section {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .controls-section {
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .app-container {
+                padding: 3rem 6rem;
+            }
+        }
+
+        /* Tablet Specific */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .app-container {
+                padding: 1.5rem 2rem;
+            }
+        }
+
+        /* Small Mobile */
+        @media (max-width: 374px) {
+            .timer-display-small {
+                font-size: 3rem !important;
+            }
+            .mode-btn-text {
+                display: none;
+            }
+        }
+
+        /* Landscape Mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .app-container {
+                padding: 0.5rem 1rem;
+            }
+            .timer-ring-container {
+                transform: scale(0.6);
+                margin: -2rem 0;
+            }
+        }
+
+        /* Desktop Hover Enhancements */
+        @media (hover: hover) and (pointer: fine) {
+            .mode-btn:hover {
+                transform: translateY(-2px);
+            }
+            
+            .control-btn:hover {
+                transform: scale(1.05);
+            }
+            
+            .sound-btn:hover {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Touch Device Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .btn-accent,
+            .mode-btn,
+            .sound-btn {
+                min-height: 44px;
+                min-width: 44px;
+            }
+        }
+
+        /* Safe Area Insets for iOS */
+        @supports (padding: max(0px)) {
+            .app-container {
+                padding-left: max(1rem, env(safe-area-inset-left));
+                padding-right: max(1rem, env(safe-area-inset-right));
+                padding-bottom: max(1rem, env(safe-area-inset-bottom));
+            }
+        }
+
+        /* Desktop Wide Timer */
+        @media (min-width: 1024px) {
+            .timer-ring-desktop {
+                width: 400px !important;
+                height: 400px !important;
+            }
+            
+            .timer-display-desktop {
+                font-size: 6rem !important;
+            }
+        }
+
+        /* Ultra-wide screens */
+        @media (min-width: 1536px) {
+            .timer-ring-desktop {
+                width: 450px !important;
+                height: 450px !important;
+            }
+            
+            .timer-display-desktop {
+                font-size: 7rem !important;
+            }
+        }
+
+        /* Header responsive adjustments */
+        .header-container {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .header-container {
+                max-width: 42rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .header-container {
+                max-width: 56rem;
+            }
+        }
+
+        /* Sound controls responsive */
+        .sound-controls {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+
+        @media (min-width: 768px) {
+            .sound-controls {
+                gap: 0.5rem;
+            }
+            
+            .sound-btn {
+                padding: 0.5rem 1rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .sound-controls {
+                gap: 0.75rem;
+            }
+            
+            .sound-btn {
+                padding: 0.625rem 1.25rem;
+                font-size: 0.875rem;
+            }
+        }
+
+        /* Footer responsive */
+        .footer-container {
+            text-align: center;
+            padding-bottom: 1.5rem;
+            padding-top: 0.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-container {
+                padding-bottom: 2rem;
+            }
+        }
+
+        /* Mode selector responsive */
+        .mode-selector {
+            display: flex;
+            background-color: rgba(30, 41, 59, 0.4);
+            border-radius: 9999px;
+            padding: 0.25rem;
+            border: 1px solid rgba(51, 65, 85, 0.3);
+        }
+
+        @media (min-width: 768px) {
+            .mode-selector {
+                padding: 0.375rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .mode-selector {
+                padding: 0.5rem;
+            }
+        }
+
+        /* Control buttons responsive */
+        .control-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .control-buttons {
+                gap: 0.75rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .control-buttons {
+                gap: 1rem;
+            }
+        }
+
+        /* Main button responsive */
+        .main-btn {
+            padding: 0.625rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .main-btn {
+                padding: 0.75rem 2rem;
+                font-size: 1.125rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .main-btn {
+                padding: 1rem 2.5rem;
+                font-size: 1.25rem;
+            }
+        }
+
+        /* Modal responsive */
+        .modal-container {
+            padding: 0.75rem;
+        }
+
+        @media (min-width: 768px) {
+            .modal-container {
+                padding: 1rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .modal-container {
+                padding: 1.5rem;
+            }
+            
+            .modal-content {
+                max-width: 32rem;
+            }
+        }
+
+        /* Stats modal responsive */
+        .stats-modal-content {
+            max-width: 24rem;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .stats-modal-content {
+                max-width: 28rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .stats-modal-content {
+                max-width: 32rem;
+            }
+        }
+
+        /* Notification banner responsive */
+        .ios-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        @media (min-width: 768px) {
+            .ios-banner {
+                left: 50%;
+                transform: translateX(-50%);
+                max-width: 32rem;
+                border-radius: 1rem 1rem 0 0;
+            }
+        }
     </style>
 </head>
 
 <body class="bg-slate-900 text-slate-200">
 
-    <!-- iOS Install Banner (Only shows on iOS Safari, not in PWA mode) -->
+    <!-- iOS Install Banner (Only shows on iOS Safari, not in PWA mode) - Responsive -->
     <div id="ios-install-banner"
-        class="hidden fixed bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900 via-slate-800 to-slate-800/95 p-4 pb-6 z-[100] border-t border-accent/30 backdrop-blur-sm">
+        class="ios-banner hidden bg-gradient-to-t from-slate-900 via-slate-800 to-slate-800/95 p-3 sm:p-4 pb-5 sm:pb-6 border-t border-accent/30 backdrop-blur-sm">
         <div class="max-w-md mx-auto">
-            <div class="flex items-start gap-3">
-                <div class="shrink-0 w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center">
-                    <i class="fa-solid fa-bell text-accent text-xl"></i>
+            <div class="flex items-start gap-2 sm:gap-3">
+                <div class="shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-accent/20 flex items-center justify-center">
+                    <i class="fa-solid fa-bell text-accent text-lg sm:text-xl"></i>
                 </div>
-                <div class="flex-1">
-                    <h3 class="font-bold text-white text-sm mb-1">Bildirim Almak İster misin?</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed mb-3">
+                <div class="flex-1 min-w-0">
+                    <h3 class="font-bold text-white text-xs sm:text-sm mb-1">Bildirim Almak İster misin?</h3>
+                    <p class="text-[10px] sm:text-xs text-slate-400 leading-relaxed mb-2 sm:mb-3">
                         iOS'ta bildirim alabilmek için uygulamayı ana ekrana eklemelisin.
                     </p>
-                    <div class="flex items-center gap-2 text-xs text-slate-300 bg-slate-700/50 rounded-lg p-2">
+                    <div class="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs text-slate-300 bg-slate-700/50 rounded-lg p-1.5 sm:p-2">
                         <span class="flex items-center gap-1">
                             <i class="fa-solid fa-arrow-up-from-bracket text-accent"></i>
-                            Paylaş
+                            <span class="hidden xs:inline">Paylaş</span>
                         </span>
-                        <i class="fa-solid fa-chevron-right text-slate-500 text-[10px]"></i>
+                        <i class="fa-solid fa-chevron-right text-slate-500 text-[8px] sm:text-[10px]"></i>
                         <span class="flex items-center gap-1">
                             <i class="fa-solid fa-plus-square text-accent"></i>
-                            Ana Ekrana Ekle
+                            <span>Ana Ekrana Ekle</span>
                         </span>
                     </div>
                 </div>
                 <button id="close-ios-banner"
-                    class="shrink-0 w-8 h-8 flex items-center justify-center text-slate-500 hover:text-white">
-                    <i class="fa-solid fa-xmark"></i>
+                    class="shrink-0 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-slate-500 hover:text-white rounded-full hover:bg-slate-700/50 transition-all">
+                    <i class="fa-solid fa-xmark text-sm sm:text-base"></i>
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Main Container -->
-    <div id="app" class="min-h-screen flex flex-col items-center relative px-4 py-8 overflow-y-auto">
+    <!-- Main Container - Desktop Enhanced -->
+    <div id="app" class="app-container min-h-screen flex flex-col items-center relative overflow-y-auto">
 
-        <!-- Top Bar: Header & Stats -->
-        <!-- Single Row Layout for Maximum Click Safety -->
-        <div class="w-full max-w-md flex items-center justify-between gap-4 mb-4 shrink-0 relative">
+        <!-- Top Bar: Header & Stats - Responsive -->
+        <div class="header-container w-full flex items-center justify-between gap-2 sm:gap-4 mb-4 lg:mb-8 shrink-0 relative">
 
             <!-- Bell Icon (Large Touch Target) -->
             <button id="notification-btn"
-                class="w-12 h-12 flex items-center justify-center text-slate-400 hover:text-accent transition-colors rounded-full bg-slate-800/50 border border-slate-700/30 active:scale-95 touch-manipulation"
+                class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-slate-400 hover:text-accent transition-colors rounded-full bg-slate-800/50 border border-slate-700/30 active:scale-95 touch-manipulation"
                 title="Bildirim Ayarları">
-                <i id="notification-icon" class="fa-regular fa-bell text-xl"></i>
+                <i id="notification-icon" class="fa-regular fa-bell text-lg sm:text-xl"></i>
             </button>
 
-            <!-- Title (Center) -->
-            <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-center flex-1 select-none">
+            <!-- Title (Center) - Responsive -->
+            <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-center flex-1 select-none">
                 <span class="text-accent">Odaklan</span><span class="text-slate-400">!</span>
             </h1>
 
             <!-- Stats (Right) - Clickable to open Stats Modal -->
             <button id="stats-btn"
-                class="flex items-center gap-1.5 text-sm text-slate-400 bg-slate-800/50 px-3 py-1.5 rounded-full border border-slate-700/30 hover:bg-slate-700/50 hover:border-slate-600/50 transition-all cursor-pointer active:scale-95">
+                class="flex items-center gap-1 sm:gap-1.5 text-xs sm:text-sm text-slate-400 bg-slate-800/50 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-slate-700/30 hover:bg-slate-700/50 hover:border-slate-600/50 transition-all cursor-pointer active:scale-95">
                 <i class="fa-solid fa-fire text-accent text-xs"></i>
                 <span id="daily-focus" class="text-accent font-medium">0</span>
                 <span class="text-xs">dk</span>
             </button>
         </div>
 
-        <!-- Hero Timer Section -->
-        <main class="always-visible flex flex-col items-center justify-center flex-1 w-full relative z-10">
+        <!-- Hero Timer Section - Desktop Enhanced -->
+        <main class="always-visible flex flex-col items-center justify-center flex-1 w-full relative z-10 max-w-4xl mx-auto">
 
-            <!-- Mode Selector - Clean, always visible text -->
-            <div class="flex bg-slate-800/40 rounded-full p-1 mb-6 text-xs md:text-sm border border-slate-700/30">
+            <!-- Mode Selector - Responsive -->
+            <div class="mode-selector flex text-xs sm:text-sm md:text-base mb-4 sm:mb-6 lg:mb-8">
                 <button id="mode-focus"
-                    class="mode-btn flex items-center gap-2 py-2 px-4 md:px-5 rounded-full font-semibold transition-all bg-accent text-slate-900"
+                    class="mode-btn flex items-center gap-1 sm:gap-2 py-1.5 sm:py-2 px-3 sm:px-4 md:px-5 lg:px-6 rounded-full font-semibold transition-all bg-accent text-slate-900"
                     data-mode="focus">
                     <i class="fa-solid fa-bullseye"></i>
-                    <span>Odak</span>
+                    <span class="mode-btn-text">Odak</span>
                 </button>
                 <button id="mode-short"
-                    class="mode-btn flex items-center gap-2 py-2 px-4 md:px-5 rounded-full font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 transition-all"
+                    class="mode-btn flex items-center gap-1 sm:gap-2 py-1.5 sm:py-2 px-3 sm:px-4 md:px-5 lg:px-6 rounded-full font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 transition-all"
                     data-mode="shortBreak">
                     <i class="fa-solid fa-leaf"></i>
-                    <span>Kısa</span>
+                    <span class="mode-btn-text">Kısa</span>
                 </button>
                 <button id="mode-long"
-                    class="mode-btn flex items-center gap-2 py-2 px-4 md:px-5 rounded-full font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 transition-all"
+                    class="mode-btn flex items-center gap-1 sm:gap-2 py-1.5 sm:py-2 px-3 sm:px-4 md:px-5 lg:px-6 rounded-full font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 transition-all"
                     data-mode="longBreak">
                     <i class="fa-solid fa-bed"></i>
-                    <span>Uzun</span>
+                    <span class="mode-btn-text">Uzun</span>
                 </button>
             </div>
 
-            <!-- Timer Display -->
-            <div class="relative mb-8 pointer-events-none select-none scale-90 md:scale-100">
-                <svg class="progress-ring w-72 h-72 md:w-80 md:h-80" viewBox="0 0 400 400">
+            <!-- Timer Display - Fully Responsive -->
+            <div class="timer-ring-container relative mb-6 sm:mb-8 lg:mb-10 pointer-events-none select-none">
+                <svg class="progress-ring w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 xl:w-[28rem] xl:h-[28rem] timer-ring-desktop" viewBox="0 0 400 400">
                     <circle cx="200" cy="200" r="180" fill="none" stroke="#1e293b" stroke-width="8" />
                     <circle id="progress-circle" class="progress-ring__circle" cx="200" cy="200" r="180" fill="none"
                         stroke="#00B7C6" stroke-width="8" stroke-linecap="round" stroke-dasharray="1131"
@@ -270,64 +604,64 @@
                 </svg>
 
                 <div class="absolute inset-0 flex flex-col items-center justify-center">
-                    <span id="mode-indicator" class="text-xs font-medium text-accent mb-1 uppercase tracking-widest">
+                    <span id="mode-indicator" class="text-[10px] sm:text-xs md:text-sm font-medium text-accent mb-1 uppercase tracking-widest">
                         Odak
                     </span>
                     <span id="timer-display"
-                        class="timer-font text-6xl md:text-7xl font-bold text-slate-100 tracking-wider">
+                        class="timer-font text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-slate-100 tracking-wider timer-display-desktop timer-display-small">
                         25:00
                     </span>
-                    <span id="pomodoro-counter" class="text-xs text-slate-500 mt-1">
+                    <span id="pomodoro-counter" class="text-[10px] sm:text-xs md:text-sm text-slate-500 mt-1">
                         0 / 4
                     </span>
                 </div>
             </div>
 
-            <!-- Control Buttons - Minimal & Clean -->
-            <div class="always-visible flex items-center justify-center gap-2 relative z-50 pointer-events-auto">
+            <!-- Control Buttons - Responsive -->
+            <div class="control-buttons always-visible relative z-50 pointer-events-auto">
                 <button id="start-btn"
-                    class="btn-accent px-6 py-2.5 md:px-8 md:py-3 rounded-full text-base md:text-lg font-bold tracking-wide shadow-lg shadow-accent/20 active:scale-95 transition-transform touch-manipulation cursor-pointer">
+                    class="main-btn btn-accent rounded-full font-bold tracking-wide shadow-lg shadow-accent/20 active:scale-95 transition-transform touch-manipulation cursor-pointer">
                     <i class="fa-solid fa-play mr-1.5"></i>
                     Başla
                 </button>
 
                 <button id="pause-btn"
-                    class="hidden btn-accent px-5 py-2.5 md:px-7 md:py-3 rounded-full text-sm md:text-base font-semibold tracking-wide">
+                    class="main-btn hidden btn-accent rounded-full font-semibold tracking-wide">
                     <i class="fa-solid fa-pause mr-1"></i>
                     Durdur
                 </button>
 
                 <button id="reset-btn"
-                    class="hidden w-10 h-10 flex items-center justify-center bg-slate-800 hover:bg-slate-700 rounded-full text-slate-300 transition-all"
+                    class="hidden w-9 h-9 sm:w-10 sm:h-10 lg:w-12 lg:h-12 flex items-center justify-center bg-slate-800 hover:bg-slate-700 rounded-full text-slate-300 transition-all control-btn"
                     title="Sıfırla">
-                    <i class="fa-solid fa-rotate-right text-sm"></i>
+                    <i class="fa-solid fa-rotate-right text-xs sm:text-sm lg:text-base"></i>
                 </button>
 
                 <button id="skip-btn"
-                    class="hidden w-10 h-10 flex items-center justify-center bg-slate-800 hover:bg-slate-700 rounded-full text-slate-300 transition-all"
+                    class="hidden w-9 h-9 sm:w-10 sm:h-10 lg:w-12 lg:h-12 flex items-center justify-center bg-slate-800 hover:bg-slate-700 rounded-full text-slate-300 transition-all control-btn"
                     title="İleri Sar">
-                    <i class="fa-solid fa-forward text-sm"></i>
+                    <i class="fa-solid fa-forward text-xs sm:text-sm lg:text-base"></i>
                 </button>
             </div>
 
         </main>
 
-        <!-- Sound Controls - Minimal inline design -->
-        <div class="flex items-center gap-1 text-slate-400 text-xs mb-4">
-            <span class="mr-1 opacity-60"><i class="fa-solid fa-volume-low"></i></span>
+        <!-- Sound Controls - Responsive -->
+        <div class="sound-controls flex items-center text-slate-400 text-xs sm:text-sm mb-4 lg:mb-6">
+            <span class="mr-1 sm:mr-2 opacity-60"><i class="fa-solid fa-volume-low"></i></span>
             <button id="sound-mute"
-                class="sound-btn active px-2.5 py-1 rounded-full hover:bg-slate-700/50 transition-all"
+                class="sound-btn active px-2 sm:px-2.5 lg:px-3 py-1 sm:py-1.5 rounded-full hover:bg-slate-700/50 transition-all"
                 data-sound="mute">Sessiz</button>
-            <button id="sound-rain" class="sound-btn px-2.5 py-1 rounded-full hover:bg-slate-700/50 transition-all"
+            <button id="sound-rain" class="sound-btn px-2 sm:px-2.5 lg:px-3 py-1 sm:py-1.5 rounded-full hover:bg-slate-700/50 transition-all"
                 data-sound="rain">Yağmur</button>
-            <button id="sound-cafe" class="sound-btn px-2.5 py-1 rounded-full hover:bg-slate-700/50 transition-all"
+            <button id="sound-cafe" class="sound-btn px-2 sm:px-2.5 lg:px-3 py-1 sm:py-1.5 rounded-full hover:bg-slate-700/50 transition-all"
                 data-sound="cafe">Kafe</button>
-            <button id="sound-fireplace" class="sound-btn px-2.5 py-1 rounded-full hover:bg-slate-700/50 transition-all"
+            <button id="sound-fireplace" class="sound-btn px-2 sm:px-2.5 lg:px-3 py-1 sm:py-1.5 rounded-full hover:bg-slate-700/50 transition-all"
                 data-sound="fireplace">Şömine</button>
         </div>
 
-        <!-- Footer -->
-        <footer class="text-center pb-6 pt-2 text-slate-500 text-xs tracking-wider font-medium select-none z-10">
+        <!-- Footer - Responsive -->
+        <footer class="footer-container text-slate-500 text-xs sm:text-sm tracking-wider font-medium select-none z-10">
             <span class="opacity-70">Odaklan! &copy; 2026</span>
             <span class="mx-2 opacity-30 text-slate-600">|</span>
             <span class="opacity-70">Atakan Karakaş</span>
@@ -335,150 +669,149 @@
 
     </div>
 
-    <!-- Completion Modal (The Trophy Room) - Redesigned -->
+    <!-- Completion Modal (The Trophy Room) - Responsive -->
     <div id="completion-modal"
-        class="hidden fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-3 md:p-4">
+        class="hidden fixed inset-0 modal-backdrop z-50 flex items-center justify-center modal-container">
         <div
-            class="max-w-sm md:max-w-md w-full bg-slate-800 rounded-2xl md:rounded-3xl flex flex-col max-h-[90vh] overflow-hidden shadow-2xl ring-1 ring-white/10">
+            class="modal-content max-w-sm sm:max-w-md lg:max-w-lg w-full bg-slate-800 rounded-2xl sm:rounded-3xl flex flex-col max-h-[90vh] overflow-hidden shadow-2xl ring-1 ring-white/10 mx-3">
 
             <!-- Fixed Top Section: Header + Tabs -->
             <div class="shrink-0 bg-slate-800">
                 <!-- Modal Header (Compact) -->
-                <div class="px-4 pt-4 pb-2 text-center">
+                <div class="px-3 sm:px-4 pt-3 sm:pt-4 pb-2 text-center">
                     <div class="inline-flex items-center gap-2 text-accent mb-1">
-                        <i class="fa-solid fa-fire text-lg"></i>
-                        <span class="text-xs font-semibold uppercase tracking-wider">Görev Tamamlandı</span>
+                        <i class="fa-solid fa-fire text-base sm:text-lg"></i>
+                        <span class="text-[10px] sm:text-xs font-semibold uppercase tracking-wider">Görev Tamamlandı</span>
                     </div>
-                    <h2 class="text-2xl md:text-3xl font-bold text-white">
+                    <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-white">
                         <span id="modal-focus-time">25</span> dk Odaklandın!
                     </h2>
                 </div>
 
                 <!-- Tabs (Always Visible) -->
-                <div class="px-4 pb-3">
+                <div class="px-3 sm:px-4 pb-2 sm:pb-3">
                     <div class="flex p-1 bg-slate-700/50 rounded-xl">
                         <button id="tab-story"
-                            class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-bold transition-all bg-accent text-slate-900 shadow-md">
+                            class="flex-1 flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all bg-accent text-slate-900 shadow-md">
                             <i class="fa-brands fa-instagram"></i>
-                            HİKAYE
+                            <span>HİKAYE</span>
                         </button>
                         <button id="tab-feed"
-                            class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium text-slate-400 hover:text-slate-200 transition-all">
+                            class="flex-1 flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-medium text-slate-400 hover:text-slate-200 transition-all">
                             <i class="fa-regular fa-image"></i>
-                            YATAY
+                            <span>YATAY</span>
                         </button>
                     </div>
                 </div>
             </div>
 
             <!-- Scrollable Middle Section: Preview Only -->
-            <!-- Increased min-height for better quote readability -->
             <div
-                class="flex-1 overflow-y-auto overflow-x-hidden bg-slate-900/50 relative flex items-center justify-center min-h-[280px] md:min-h-[400px]">
+                class="flex-1 overflow-y-auto overflow-x-hidden bg-slate-900/50 relative flex items-center justify-center min-h-[200px] sm:min-h-[280px] md:min-h-[400px]">
                 <!-- Preview Wrapper - Static, no animation -->
-                <div id="preview-wrapper" class="relative m-4">
+                <div id="preview-wrapper" class="relative m-2 sm:m-4">
                     <!-- Scaled poster clone injected here by JS -->
                 </div>
 
                 <!-- Loading State -->
                 <div id="preview-loading"
-                    class="absolute inset-0 flex flex-col items-center justify-center text-slate-500 gap-3 hidden">
-                    <i class="fa-solid fa-circle-notch fa-spin text-3xl text-accent"></i>
-                    <span class="text-sm">Önizleme Hazırlanıyor...</span>
+                    class="absolute inset-0 flex flex-col items-center justify-center text-slate-500 gap-2 sm:gap-3 hidden">
+                    <i class="fa-solid fa-circle-notch fa-spin text-2xl sm:text-3xl text-accent"></i>
+                    <span class="text-xs sm:text-sm">Önizleme Hazırlanıyor...</span>
                 </div>
             </div>
 
             <!-- Fixed Bottom Section: Compact Action Bar -->
-            <div class="shrink-0 p-4 bg-slate-800 border-t border-slate-700/50">
+            <div class="shrink-0 p-3 sm:p-4 bg-slate-800 border-t border-slate-700/50">
                 <!-- Action Row -->
                 <div class="flex gap-2 mb-2">
                     <button id="reroll-btn"
-                        class="w-12 h-12 flex items-center justify-center bg-slate-700 hover:bg-slate-600 text-accent rounded-xl transition-all active:scale-95"
+                        class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-slate-700 hover:bg-slate-600 text-accent rounded-xl transition-all active:scale-95"
                         title="Sözü Değiştir">
-                        <i class="fa-solid fa-dice text-xl"></i>
+                        <i class="fa-solid fa-dice text-lg sm:text-xl"></i>
                     </button>
                     <button id="download-active-btn"
-                        class="flex-1 btn-accent rounded-xl py-3 font-bold text-base shadow-lg shadow-accent/20 flex items-center justify-center gap-2 active:scale-95 transition-all">
+                        class="flex-1 btn-accent rounded-xl py-2.5 sm:py-3 font-bold text-sm sm:text-base shadow-lg shadow-accent/20 flex items-center justify-center gap-2 active:scale-95 transition-all">
                         <i class="fa-solid fa-download"></i>
-                        Poster İndir
+                        <span>Poster İndir</span>
                     </button>
                 </div>
                 <button id="close-modal-btn"
-                    class="w-full text-slate-500 hover:text-slate-300 text-xs font-medium py-1.5 transition-colors">
+                    class="w-full text-slate-500 hover:text-slate-300 text-xs font-medium py-1 sm:py-1.5 transition-colors">
                     Kapat ve Devam Et
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Stats Modal - Daily History & Poster -->
-    <div id="stats-modal" class="hidden fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-3">
+    <!-- Stats Modal - Daily History & Poster - Responsive -->
+    <div id="stats-modal" class="hidden fixed inset-0 modal-backdrop z-50 flex items-center justify-center modal-container">
         <div
-            class="max-w-sm w-full bg-slate-800 rounded-2xl flex flex-col max-h-[85vh] overflow-hidden shadow-2xl ring-1 ring-white/10">
+            class="stats-modal-content bg-slate-800 rounded-2xl flex flex-col max-h-[85vh] overflow-hidden shadow-2xl ring-1 ring-white/10 mx-3">
 
             <!-- Header -->
-            <div class="shrink-0 p-4 border-b border-slate-700/50 text-center">
+            <div class="shrink-0 p-3 sm:p-4 border-b border-slate-700/50 text-center">
                 <div class="inline-flex items-center gap-2 text-accent mb-1">
-                    <i class="fa-solid fa-chart-simple text-lg"></i>
-                    <span class="text-xs font-semibold uppercase tracking-wider">İstatistikler</span>
+                    <i class="fa-solid fa-chart-simple text-base sm:text-lg"></i>
+                    <span class="text-[10px] sm:text-xs font-semibold uppercase tracking-wider">İstatistikler</span>
                 </div>
-                <h2 class="text-xl font-bold text-white">Bugünkü Odaklanma</h2>
+                <h2 class="text-lg sm:text-xl font-bold text-white">Bugünkü Odaklanma</h2>
             </div>
 
             <!-- Today's Stats -->
-            <div class="p-4 bg-slate-900/50">
-                <div class="flex items-center justify-center gap-4">
+            <div class="p-3 sm:p-4 bg-slate-900/50">
+                <div class="flex items-center justify-center gap-3 sm:gap-4">
                     <div class="text-center">
-                        <div class="text-4xl font-bold text-accent" id="stats-today-time">0</div>
-                        <div class="text-xs text-slate-400 uppercase">Dakika</div>
+                        <div class="text-3xl sm:text-4xl font-bold text-accent" id="stats-today-time">0</div>
+                        <div class="text-[10px] sm:text-xs text-slate-400 uppercase">Dakika</div>
                     </div>
-                    <div class="w-px h-12 bg-slate-700"></div>
+                    <div class="w-px h-10 sm:h-12 bg-slate-700"></div>
                     <div class="text-center">
-                        <div class="text-4xl font-bold text-white" id="stats-today-pomodoros">0</div>
-                        <div class="text-xs text-slate-400 uppercase">Pomodoro</div>
+                        <div class="text-3xl sm:text-4xl font-bold text-white" id="stats-today-pomodoros">0</div>
+                        <div class="text-[10px] sm:text-xs text-slate-400 uppercase">Pomodoro</div>
                     </div>
                 </div>
             </div>
 
             <!-- Weekly History -->
-            <div class="flex-1 overflow-y-auto p-4">
-                <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Son 7 Gün</h3>
-                <div id="stats-weekly-list" class="space-y-2">
+            <div class="flex-1 overflow-y-auto p-3 sm:p-4">
+                <h3 class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 sm:mb-3">Son 7 Gün</h3>
+                <div id="stats-weekly-list" class="space-y-1.5 sm:space-y-2">
                     <!-- JS will populate this -->
                 </div>
             </div>
 
             <!-- Actions -->
-            <div class="shrink-0 p-4 bg-slate-800 border-t border-slate-700/50">
+            <div class="shrink-0 p-3 sm:p-4 bg-slate-800 border-t border-slate-700/50">
                 <button id="create-poster-btn"
-                    class="w-full btn-accent rounded-xl py-3 font-bold text-sm flex items-center justify-center gap-2 active:scale-95 transition-all mb-2">
+                    class="w-full btn-accent rounded-xl py-2.5 sm:py-3 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 active:scale-95 transition-all mb-2">
                     <i class="fa-solid fa-image"></i>
-                    Poster Oluştur
+                    <span>Poster Oluştur</span>
                 </button>
                 <button id="close-stats-modal-btn"
-                    class="w-full text-slate-500 hover:text-slate-300 text-xs font-medium py-1.5 transition-colors">
+                    class="w-full text-slate-500 hover:text-slate-300 text-xs font-medium py-1 sm:py-1.5 transition-colors">
                     Kapat
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Notification Permission Modal (Soft Prompt) -->
-    <div id="notification-modal" class="hidden fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4">
-        <div class="bg-slate-800 rounded-3xl p-8 max-w-sm w-full text-center">
-            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent/20 mb-6">
-                <i class="fa-regular fa-bell text-3xl text-accent"></i>
+    <!-- Notification Permission Modal (Soft Prompt) - Responsive -->
+    <div id="notification-modal" class="hidden fixed inset-0 modal-backdrop z-50 flex items-center justify-center modal-container">
+        <div class="bg-slate-800 rounded-2xl sm:rounded-3xl p-5 sm:p-8 max-w-xs sm:max-w-sm w-full text-center mx-3">
+            <div class="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-accent/20 mb-4 sm:mb-6">
+                <i class="fa-regular fa-bell text-2xl sm:text-3xl text-accent"></i>
             </div>
-            <h3 class="text-xl font-bold text-slate-100 mb-2">Zaman Dolunca Haber Ver?</h3>
-            <p id="notification-modal-text" class="text-slate-400 mb-8">
+            <h3 class="text-lg sm:text-xl font-bold text-slate-100 mb-2">Zaman Dolunca Haber Ver?</h3>
+            <p id="notification-modal-text" class="text-xs sm:text-sm text-slate-400 mb-6 sm:mb-8">
                 Süre bittiğinde veya mola zamanı geldiğinde sana bildirim gönderebilmem için iznine ihtiyacım var.
             </p>
-            <div class="flex flex-col gap-3">
-                <button id="enable-notifications-btn" class="btn-accent py-3 rounded-xl font-semibold">
+            <div class="flex flex-col gap-2 sm:gap-3">
+                <button id="enable-notifications-btn" class="btn-accent py-2.5 sm:py-3 rounded-xl font-semibold text-sm sm:text-base">
                     İzin Ver
                 </button>
                 <button id="close-notification-modal-btn"
-                    class="text-slate-500 hover:text-slate-300 py-2 transition-colors">
+                    class="text-slate-500 hover:text-slate-300 py-1.5 sm:py-2 transition-colors text-xs sm:text-sm">
                     Şimdi Değil
                 </button>
             </div>
@@ -746,10 +1079,8 @@
         // Notification Helpers
         // =====================
         const originalTitle = document.title;
-        // ... (Notification functions kept as is, abbreviating for clarity if possible, but keeping full logic)
-        function requestNotificationPermission() { /* ... */ } // Not used currently due to soft prompt
-
         let currentNotification = null;
+        let swRegistration = null;
 
         function sendNotification(title, body) {
             if ('Notification' in window && Notification.permission === 'granted') {
@@ -759,14 +1090,28 @@
                         currentNotification.close();
                     }
 
-                    // Removed 'tag' to force a new notification instance every time
-                    // Timestamp added to ensure uniqueness if needed, though without tag it's default.
-                    currentNotification = new Notification(title, {
-                        body: body,
-                        icon: favicons.focus,
-                        requireInteraction: true // Optional: keeps it on screen until user interacts
-                    });
-                } catch (e) { }
+                    // Try Service Worker notification first (better for mobile/background)
+                    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                        navigator.serviceWorker.controller.postMessage({
+                            type: 'SHOW_NOTIFICATION',
+                            title: title,
+                            body: body,
+                            tag: 'odaklan-timer-' + Date.now()
+                        });
+                    } else {
+                        // Fallback to standard Notification API
+                        currentNotification = new Notification(title, {
+                            body: body,
+                            icon: favicons.focus,
+                            badge: favicons.focus,
+                            vibrate: [200, 100, 200],
+                            requireInteraction: true,
+                            tag: 'odaklan-notification'
+                        });
+                    }
+                } catch (e) {
+                    console.log('Notification error:', e);
+                }
             }
             flashTitle(title);
         }
@@ -792,7 +1137,6 @@
         }
 
         function updateFavicon(mode) {
-            // ... existing logic
             const favicon = document.getElementById('favicon');
             if (favicon) favicon.href = favicons[mode] || favicons.idle;
         }
@@ -1590,7 +1934,39 @@
         // =====================
         // Initialization
         // =====================
+        
+        // Service Worker Registration for Push Notifications
+        async function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                try {
+                    const registration = await navigator.serviceWorker.register('/sw.js', {
+                        scope: '/'
+                    });
+                    console.log('Service Worker registered successfully:', registration.scope);
+                    
+                    // Check for updates
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                console.log('New content available, please refresh.');
+                            }
+                        });
+                    });
+                    
+                    return registration;
+                } catch (error) {
+                    console.error('Service Worker registration failed:', error);
+                    return null;
+                }
+            }
+            return null;
+        }
+        
         function init() {
+            // Register Service Worker for notifications
+            registerServiceWorker();
+            
             loadDailyFocus();
             loadPomodoroCount();
             updateTimerDisplay();
@@ -1604,11 +1980,13 @@
                 document.getElementById('notification-modal').classList.add('hidden');
             });
 
-            // iOS Install Banner Logic
+            // iOS Install Banner Logic - Enhanced
             const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            const isAndroid = /Android/.test(navigator.userAgent);
             const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
             const iosBannerDismissed = localStorage.getItem('ios_banner_dismissed');
 
+            // Show iOS banner only when not in standalone mode
             if (isIOS && !isInStandaloneMode && !iosBannerDismissed) {
                 const iosBanner = document.getElementById('ios-install-banner');
                 iosBanner.classList.remove('hidden');
@@ -1618,6 +1996,40 @@
                     localStorage.setItem('ios_banner_dismissed', 'true');
                 });
             }
+
+            // Android: Auto-request notification permission on first visit
+            if (isAndroid && !isInStandaloneMode && 'Notification' in window) {
+                if (Notification.permission === 'default') {
+                    // Don't auto-prompt on Android, let user trigger it
+                    console.log('Android detected, notifications available on user request');
+                }
+            }
+
+            // Handle URL parameters for shortcuts
+            const urlParams = new URLSearchParams(window.location.search);
+            const modeParam = urlParams.get('mode');
+            if (modeParam && ['focus', 'shortBreak', 'longBreak'].includes(modeParam)) {
+                selectMode(modeParam);
+            }
+
+            // Visibility change handler - pause ambient sounds when tab is hidden
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    // Tab is hidden - keep timer running but note the time
+                    console.log('Tab hidden at:', Date.now());
+                } else {
+                    // Tab is visible again - sync timer
+                    if (state.isRunning && state.targetEndTime) {
+                        const now = Date.now();
+                        state.timeRemaining = Math.max(0, Math.ceil((state.targetEndTime - now) / MS_PER_SECOND));
+                        updateTimerDisplay();
+                        updateProgressRing();
+                        if (state.timeRemaining <= 0) {
+                            completePomodoro();
+                        }
+                    }
+                }
+            });
         }
 
         init();
