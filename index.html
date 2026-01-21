@@ -23,13 +23,16 @@
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 152 152'><rect width='152' height='152' rx='30' fill='%230f172a'/><circle cx='76' cy='76' r='50' fill='none' stroke='%2300B7C6' stroke-width='6'/><text x='76' y='90' font-size='42' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%2300B7C6'>O!</text></svg>">
     <link rel="apple-touch-icon" sizes="120x120"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'><rect width='120' height='120' rx='25' fill='%230f172a'/><circle cx='60' cy='60' r='40' fill='none' stroke='%2300B7C6' stroke-width='5'/><text x='60' y='72' font-size='35' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%2300B7C6'>O!</text></svg>">
-    
+
     <!-- iOS Splash Screens -->
-    <link rel="apple-touch-startup-image" media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)"
+    <link rel="apple-touch-startup-image"
+        media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1290 2796'><rect width='1290' height='2796' fill='%230f172a'/><circle cx='645' cy='1398' r='200' fill='none' stroke='%2300B7C6' stroke-width='12'/><text x='645' y='1440' font-size='150' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%2300B7C6'>O!</text></svg>">
-    <link rel="apple-touch-startup-image" media="screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3)"
+    <link rel="apple-touch-startup-image"
+        media="screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3)"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1179 2556'><rect width='1179' height='2556' fill='%230f172a'/><circle cx='589' cy='1278' r='180' fill='none' stroke='%2300B7C6' stroke-width='10'/><text x='589' y='1320' font-size='140' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%2300B7C6'>O!</text></svg>">
-    <link rel="apple-touch-startup-image" media="screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)"
+    <link rel="apple-touch-startup-image"
+        media="screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1170 2532'><rect width='1170' height='2532' fill='%230f172a'/><circle cx='585' cy='1266' r='180' fill='none' stroke='%2300B7C6' stroke-width='10'/><text x='585' y='1308' font-size='140' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%2300B7C6'>O!</text></svg>">
 
     <!-- Theme Color -->
@@ -121,15 +124,6 @@
             transform: scale(0.98);
         }
 
-        /* Sound Button Active State */
-        /* Button Active State - Forced Specificity */
-        .sound-btn.active {
-            color: #00B7C6 !important;
-            background-color: rgba(0, 183, 198, 0.15) !important;
-            border: 1px solid rgba(0, 183, 198, 0.3) !important;
-            box-shadow: 0 0 15px rgba(0, 183, 198, 0.2);
-        }
-
         /* Prevent large elements from blocking clicks */
         .pointer-events-none-safe {
             pointer-events: none;
@@ -183,10 +177,38 @@
             animation: pulse-accent 2s infinite;
         }
 
+        /* Timer Ring Glow (when running) */
+        @keyframes ring-glow {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 8px rgba(0, 183, 198, 0.3));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 20px rgba(0, 183, 198, 0.5));
+            }
+        }
+
+        .timer-running .progress-ring {
+            animation: ring-glow 3s ease-in-out infinite;
+        }
+
+        /* Task Drag Feedback */
+        .task-item.drag-over {
+            border-color: #00B7C6 !important;
+            background-color: rgba(0, 183, 198, 0.1) !important;
+        }
+
+        .task-item.dragging {
+            opacity: 0.5;
+            transform: scale(1.02);
+        }
+
         /* ================== */
         /* RESPONSIVE DESIGN  */
         /* ================== */
-        
+
         /* Mobile First Base Styles */
         .app-container {
             min-height: 100vh;
@@ -211,7 +233,7 @@
                 padding: 2rem 4rem;
                 justify-content: center;
             }
-            
+
             /* Two-column layout for wide screens */
             .desktop-layout {
                 display: grid;
@@ -221,14 +243,14 @@
                 width: 100%;
                 align-items: center;
             }
-            
+
             .timer-section {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
             }
-            
+
             .controls-section {
                 display: flex;
                 flex-direction: column;
@@ -254,6 +276,7 @@
             .timer-display-small {
                 font-size: 3rem !important;
             }
+
             .mode-btn-text {
                 display: none;
             }
@@ -264,6 +287,7 @@
             .app-container {
                 padding: 0.5rem 1rem;
             }
+
             .timer-ring-container {
                 transform: scale(0.6);
                 margin: -2rem 0;
@@ -275,18 +299,15 @@
             .mode-btn:hover {
                 transform: translateY(-2px);
             }
-            
+
             .control-btn:hover {
-                transform: scale(1.05);
-            }
-            
-            .sound-btn:hover {
                 transform: scale(1.05);
             }
         }
 
         /* Touch Device Optimizations */
         @media (hover: none) and (pointer: coarse) {
+
             .btn-accent,
             .mode-btn,
             .sound-btn {
@@ -310,7 +331,7 @@
                 width: 400px !important;
                 height: 400px !important;
             }
-            
+
             .timer-display-desktop {
                 font-size: 6rem !important;
             }
@@ -322,7 +343,7 @@
                 width: 450px !important;
                 height: 450px !important;
             }
-            
+
             .timer-display-desktop {
                 font-size: 7rem !important;
             }
@@ -357,20 +378,11 @@
             .sound-controls {
                 gap: 0.5rem;
             }
-            
-            .sound-btn {
-                padding: 0.5rem 1rem;
-            }
         }
 
         @media (min-width: 1024px) {
             .sound-controls {
                 gap: 0.75rem;
-            }
-            
-            .sound-btn {
-                padding: 0.625rem 1.25rem;
-                font-size: 0.875rem;
             }
         }
 
@@ -463,7 +475,7 @@
             .modal-container {
                 padding: 1.5rem;
             }
-            
+
             .modal-content {
                 max-width: 32rem;
             }
@@ -514,7 +526,8 @@
         class="ios-banner hidden bg-gradient-to-t from-slate-900 via-slate-800 to-slate-800/95 p-3 sm:p-4 pb-5 sm:pb-6 border-t border-accent/30 backdrop-blur-sm">
         <div class="max-w-md mx-auto">
             <div class="flex items-start gap-2 sm:gap-3">
-                <div class="shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-accent/20 flex items-center justify-center">
+                <div
+                    class="shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-accent/20 flex items-center justify-center">
                     <i class="fa-solid fa-bell text-accent text-lg sm:text-xl"></i>
                 </div>
                 <div class="flex-1 min-w-0">
@@ -522,7 +535,8 @@
                     <p class="text-[10px] sm:text-xs text-slate-400 leading-relaxed mb-2 sm:mb-3">
                         iOS'ta bildirim alabilmek için uygulamayı ana ekrana eklemelisin.
                     </p>
-                    <div class="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs text-slate-300 bg-slate-700/50 rounded-lg p-1.5 sm:p-2">
+                    <div
+                        class="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs text-slate-300 bg-slate-700/50 rounded-lg p-1.5 sm:p-2">
                         <span class="flex items-center gap-1">
                             <i class="fa-solid fa-arrow-up-from-bracket text-accent"></i>
                             <span class="hidden xs:inline">Paylaş</span>
@@ -546,17 +560,29 @@
     <div id="app" class="app-container min-h-screen flex flex-col items-center relative overflow-y-auto">
 
         <!-- Top Bar: Header & Stats - Responsive -->
-        <div class="header-container w-full flex items-center justify-between gap-2 sm:gap-4 mb-4 lg:mb-8 shrink-0 relative">
+        <div
+            class="header-container w-full flex items-center justify-between gap-2 sm:gap-4 pt-2 sm:pt-4 mb-4 lg:mb-8 shrink-0 relative">
 
-            <!-- Bell Icon (Large Touch Target) -->
-            <button id="notification-btn"
-                class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-slate-400 hover:text-accent transition-colors rounded-full bg-slate-800/50 border border-slate-700/30 active:scale-95 touch-manipulation"
-                title="Bildirim Ayarları">
-                <i id="notification-icon" class="fa-regular fa-bell text-lg sm:text-xl"></i>
-            </button>
+            <!-- Left Side: Notification + Settings -->
+            <div class="flex items-center gap-1 sm:gap-2">
+                <!-- Bell Icon (Large Touch Target) -->
+                <button id="notification-btn"
+                    class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-slate-600 hover:text-accent transition-colors duration-200 rounded-full bg-slate-800/50 border border-slate-700/30 active:scale-95 touch-manipulation"
+                    title="Bildirim Ayarları">
+                    <i id="notification-icon" class="fa-regular fa-bell text-lg sm:text-xl"></i>
+                </button>
+
+                <!-- Settings Button -->
+                <button id="settings-btn"
+                    class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-slate-600 hover:text-accent transition-colors duration-200 rounded-full bg-slate-800/50 border border-slate-700/30 active:scale-95 touch-manipulation"
+                    title="Ayarlar">
+                    <i class="fa-solid fa-gear text-lg sm:text-xl"></i>
+                </button>
+            </div>
 
             <!-- Title (Center) - Responsive -->
-            <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-center flex-1 select-none">
+            <h1
+                class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-center flex-1 select-none">
                 <span class="text-accent">Odaklan</span><span class="text-slate-400">!</span>
             </h1>
 
@@ -570,33 +596,35 @@
         </div>
 
         <!-- Hero Timer Section - Desktop Enhanced -->
-        <main class="always-visible flex flex-col items-center justify-center flex-1 w-full relative z-10 max-w-4xl mx-auto">
+        <main
+            class="always-visible flex flex-col items-center justify-center flex-1 w-full relative z-10 max-w-4xl mx-auto">
 
-            <!-- Mode Selector - Responsive -->
-            <div class="mode-selector flex text-xs sm:text-sm md:text-base mb-4 sm:mb-6 lg:mb-8">
+            <!-- Mode Selector - Mobile Optimized -->
+            <div class="mode-selector flex gap-1 sm:gap-2 text-xs sm:text-sm md:text-base mb-8 sm:mb-10 lg:mb-12">
                 <button id="mode-focus"
-                    class="mode-btn flex items-center gap-1 sm:gap-2 py-1.5 sm:py-2 px-3 sm:px-4 md:px-5 lg:px-6 rounded-full font-semibold transition-all bg-accent text-slate-900"
+                    class="mode-btn flex items-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-3 sm:px-4 md:px-5 lg:px-6 rounded-full font-semibold transition-all duration-200 bg-accent text-slate-900 active:scale-95 active:opacity-90 touch-manipulation"
                     data-mode="focus">
                     <i class="fa-solid fa-bullseye"></i>
-                    <span class="mode-btn-text">Odak</span>
+                    <span class="mode-btn-text text-xs sm:text-sm">Odak</span>
                 </button>
                 <button id="mode-short"
-                    class="mode-btn flex items-center gap-1 sm:gap-2 py-1.5 sm:py-2 px-3 sm:px-4 md:px-5 lg:px-6 rounded-full font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 transition-all"
+                    class="mode-btn flex items-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-3 sm:px-4 md:px-5 lg:px-6 rounded-full font-medium text-slate-500 hover:text-slate-300 hover:bg-slate-700/30 active:scale-95 active:bg-slate-700/50 transition-all duration-200 touch-manipulation"
                     data-mode="shortBreak">
                     <i class="fa-solid fa-leaf"></i>
-                    <span class="mode-btn-text">Kısa</span>
+                    <span class="mode-btn-text text-xs sm:text-sm">Kısa</span>
                 </button>
                 <button id="mode-long"
-                    class="mode-btn flex items-center gap-1 sm:gap-2 py-1.5 sm:py-2 px-3 sm:px-4 md:px-5 lg:px-6 rounded-full font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 transition-all"
+                    class="mode-btn flex items-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-3 sm:px-4 md:px-5 lg:px-6 rounded-full font-medium text-slate-500 hover:text-slate-300 hover:bg-slate-700/30 active:scale-95 active:bg-slate-700/50 transition-all duration-200 touch-manipulation"
                     data-mode="longBreak">
                     <i class="fa-solid fa-bed"></i>
-                    <span class="mode-btn-text">Uzun</span>
+                    <span class="mode-btn-text text-xs sm:text-sm">Uzun</span>
                 </button>
             </div>
 
             <!-- Timer Display - Fully Responsive -->
             <div class="timer-ring-container relative mb-6 sm:mb-8 lg:mb-10 pointer-events-none select-none">
-                <svg class="progress-ring w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 xl:w-[28rem] xl:h-[28rem] timer-ring-desktop" viewBox="0 0 400 400">
+                <svg class="progress-ring w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 xl:w-[28rem] xl:h-[28rem] timer-ring-desktop"
+                    viewBox="0 0 400 400">
                     <circle cx="200" cy="200" r="180" fill="none" stroke="#1e293b" stroke-width="8" />
                     <circle id="progress-circle" class="progress-ring__circle" cx="200" cy="200" r="180" fill="none"
                         stroke="#00B7C6" stroke-width="8" stroke-linecap="round" stroke-dasharray="1131"
@@ -604,7 +632,8 @@
                 </svg>
 
                 <div class="absolute inset-0 flex flex-col items-center justify-center">
-                    <span id="mode-indicator" class="text-[10px] sm:text-xs md:text-sm font-medium text-accent mb-1 uppercase tracking-widest">
+                    <span id="mode-indicator"
+                        class="text-[10px] sm:text-xs md:text-sm font-medium text-accent mb-1 uppercase tracking-widest">
                         Odak
                     </span>
                     <span id="timer-display"
@@ -625,8 +654,7 @@
                     Başla
                 </button>
 
-                <button id="pause-btn"
-                    class="main-btn hidden btn-accent rounded-full font-semibold tracking-wide">
+                <button id="pause-btn" class="main-btn hidden btn-accent rounded-full font-semibold tracking-wide">
                     <i class="fa-solid fa-pause mr-1"></i>
                     Durdur
                 </button>
@@ -646,22 +674,37 @@
 
         </main>
 
-        <!-- Sound Controls - Responsive -->
-        <div class="sound-controls flex items-center text-slate-400 text-xs sm:text-sm mb-4 lg:mb-6">
-            <span class="mr-1 sm:mr-2 opacity-60"><i class="fa-solid fa-volume-low"></i></span>
-            <button id="sound-mute"
-                class="sound-btn active px-2 sm:px-2.5 lg:px-3 py-1 sm:py-1.5 rounded-full hover:bg-slate-700/50 transition-all"
-                data-sound="mute">Sessiz</button>
-            <button id="sound-rain" class="sound-btn px-2 sm:px-2.5 lg:px-3 py-1 sm:py-1.5 rounded-full hover:bg-slate-700/50 transition-all"
-                data-sound="rain">Yağmur</button>
-            <button id="sound-cafe" class="sound-btn px-2 sm:px-2.5 lg:px-3 py-1 sm:py-1.5 rounded-full hover:bg-slate-700/50 transition-all"
-                data-sound="cafe">Kafe</button>
-            <button id="sound-fireplace" class="sound-btn px-2 sm:px-2.5 lg:px-3 py-1 sm:py-1.5 rounded-full hover:bg-slate-700/50 transition-all"
-                data-sound="fireplace">Şömine</button>
+
+        <!-- Tasks Section - Enhanced UX -->
+        <div class="w-full max-w-sm mx-auto mt-8 mb-4 lg:mb-6">
+            <!-- Section Label -->
+            <div class="flex items-center gap-3 mb-4">
+                <div class="h-px flex-1 bg-slate-700/50"></div>
+                <span class="text-[10px] uppercase tracking-widest text-slate-600 font-medium">Görevler</span>
+                <div class="h-px flex-1 bg-slate-700/50"></div>
+            </div>
+
+            <!-- Task Input -->
+            <div class="flex gap-3 mb-4">
+                <input type="text" id="task-input" placeholder="Görev ekle..."
+                    class="flex-1 bg-slate-800/50 border border-slate-700/50 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:border-accent focus:ring-2 focus:ring-accent/30 focus:outline-none transition-all duration-200"
+                    maxlength="50">
+                <button id="add-task-btn"
+                    class="px-4 py-2.5 bg-accent hover:bg-accent-dark text-slate-900 rounded-xl text-sm font-medium transition-all duration-200 active:scale-95 shadow-lg shadow-accent/20">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </div>
+
+            <!-- Task List -->
+            <div id="task-list" class="space-y-2 max-h-48 overflow-y-auto scrollbar-thin">
+                <!-- Tasks will be populated by JS -->
+            </div>
         </div>
 
-        <!-- Footer - Responsive -->
-        <footer class="footer-container text-slate-500 text-xs sm:text-sm tracking-wider font-medium select-none z-10">
+        <!-- Footer - Mobile Safe Area -->
+        <footer
+            class="footer-container text-slate-500 text-xs sm:text-sm tracking-wider font-medium select-none z-10 pb-safe"
+            style="padding-bottom: max(1rem, env(safe-area-inset-bottom));">
             <span class="opacity-70">Odaklan! &copy; 2026</span>
             <span class="mx-2 opacity-30 text-slate-600">|</span>
             <span class="opacity-70">Atakan Karakaş</span>
@@ -681,7 +724,8 @@
                 <div class="px-3 sm:px-4 pt-3 sm:pt-4 pb-2 text-center">
                     <div class="inline-flex items-center gap-2 text-accent mb-1">
                         <i class="fa-solid fa-fire text-base sm:text-lg"></i>
-                        <span class="text-[10px] sm:text-xs font-semibold uppercase tracking-wider">Görev Tamamlandı</span>
+                        <span class="text-[10px] sm:text-xs font-semibold uppercase tracking-wider">Görev
+                            Tamamlandı</span>
                     </div>
                     <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-white">
                         <span id="modal-focus-time">25</span> dk Odaklandın!
@@ -745,7 +789,8 @@
     </div>
 
     <!-- Stats Modal - Daily History & Poster - Responsive -->
-    <div id="stats-modal" class="hidden fixed inset-0 modal-backdrop z-50 flex items-center justify-center modal-container">
+    <div id="stats-modal"
+        class="hidden fixed inset-0 modal-backdrop z-50 flex items-center justify-center modal-container">
         <div
             class="stats-modal-content bg-slate-800 rounded-2xl flex flex-col max-h-[85vh] overflow-hidden shadow-2xl ring-1 ring-white/10 mx-3">
 
@@ -774,23 +819,30 @@
             </div>
 
             <!-- Monthly Comparison Banner -->
-            <div id="monthly-comparison-banner" class="mx-3 sm:mx-4 mt-3 p-3 rounded-xl bg-gradient-to-r from-accent/10 to-slate-700/30 border border-accent/20">
+            <div id="monthly-comparison-banner"
+                class="mx-3 sm:mx-4 mt-3 p-3 rounded-xl bg-gradient-to-r from-accent/10 to-slate-700/30 border border-accent/20">
                 <div class="flex items-center gap-2 sm:gap-3">
                     <span id="monthly-comparison-emoji" class="text-2xl sm:text-3xl">🌟</span>
                     <div class="flex-1 min-w-0">
-                        <div class="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider mb-0.5" id="monthly-comparison-title">Bu Ay vs Geçen Ay</div>
-                        <p id="monthly-comparison-message" class="text-xs sm:text-sm text-white font-medium">Bu ay harika bir başlangıç yaptın!</p>
+                        <div class="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider mb-0.5"
+                            id="monthly-comparison-title">Bu Ay vs Geçen Ay</div>
+                        <p id="monthly-comparison-message" class="text-xs sm:text-sm text-white font-medium">Bu ay
+                            harika bir başlangıç yaptın!</p>
                     </div>
                 </div>
-                <div class="flex items-center justify-between mt-2 pt-2 border-t border-slate-700/50 text-[10px] sm:text-xs">
-                    <span class="text-slate-400">Bu ay: <span id="monthly-current-total" class="text-accent font-medium">0</span> dk</span>
-                    <span class="text-slate-500">Geçen ay: <span id="monthly-previous-total" class="text-slate-400">0</span> dk</span>
+                <div
+                    class="flex items-center justify-between mt-2 pt-2 border-t border-slate-700/50 text-[10px] sm:text-xs">
+                    <span class="text-slate-400">Bu ay: <span id="monthly-current-total"
+                            class="text-accent font-medium">0</span> dk</span>
+                    <span class="text-slate-500">Geçen ay: <span id="monthly-previous-total"
+                            class="text-slate-400">0</span> dk</span>
                 </div>
             </div>
 
             <!-- Weekly History -->
             <div class="flex-1 overflow-y-auto p-3 sm:p-4">
-                <h3 class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 sm:mb-3">Son 7 Gün</h3>
+                <h3 class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 sm:mb-3">
+                    Son 7 Gün</h3>
                 <div id="stats-weekly-list" class="space-y-1.5 sm:space-y-2">
                     <!-- JS will populate this -->
                 </div>
@@ -811,10 +863,194 @@
         </div>
     </div>
 
+    <!-- Settings Modal -->
+    <div id="settings-modal"
+        class="hidden fixed inset-0 modal-backdrop z-50 flex items-center justify-center modal-container">
+        <div
+            class="stats-modal-content bg-slate-800 rounded-2xl flex flex-col max-h-[90vh] overflow-hidden shadow-2xl ring-1 ring-white/10 mx-3">
+
+            <!-- Header -->
+            <div class="shrink-0 p-3 sm:p-4 border-b border-slate-700/50">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2 text-accent">
+                        <i class="fa-solid fa-gear text-base sm:text-lg"></i>
+                        <span class="text-sm sm:text-base font-bold text-white">Ayarlar</span>
+                    </div>
+                    <button id="close-settings-btn"
+                        class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-white rounded-full hover:bg-slate-700/50 transition-all">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Tabs -->
+                <div class="flex mt-3 bg-slate-900/50 rounded-lg p-1 text-xs sm:text-sm">
+                    <button id="settings-tab-timer"
+                        class="settings-tab flex-1 py-1.5 px-2 rounded-md font-medium transition-all bg-accent text-slate-900">
+                        <i class="fa-solid fa-clock mr-1"></i>Zamanlayıcı
+                    </button>
+                    <button id="settings-tab-sound"
+                        class="settings-tab flex-1 py-1.5 px-2 rounded-md font-medium transition-all text-slate-400 hover:text-slate-200">
+                        <i class="fa-solid fa-volume-high mr-1"></i>Ses
+                    </button>
+                    <button id="settings-tab-lang"
+                        class="settings-tab flex-1 py-1.5 px-2 rounded-md font-medium transition-all text-slate-400 hover:text-slate-200">
+                        <i class="fa-solid fa-language mr-1"></i>Dil
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="flex-1 overflow-y-auto p-3 sm:p-4">
+
+                <!-- Timer Settings Tab -->
+                <div id="settings-panel-timer" class="settings-panel space-y-4">
+                    <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Süre Ayarları</h3>
+
+                    <div class="grid grid-cols-3 gap-2 sm:gap-3">
+                        <div class="bg-slate-700/30 rounded-lg p-2 sm:p-3">
+                            <label class="text-[10px] sm:text-xs text-slate-400 block mb-1">Odak (dk)</label>
+                            <input type="number" id="setting-focus-duration" value="25" min="1" max="120"
+                                class="w-full bg-slate-900/50 border border-slate-600 rounded-lg px-2 py-1.5 text-white text-sm sm:text-base font-medium text-center focus:border-accent focus:outline-none">
+                        </div>
+                        <div class="bg-slate-700/30 rounded-lg p-2 sm:p-3">
+                            <label class="text-[10px] sm:text-xs text-slate-400 block mb-1">Kısa (dk)</label>
+                            <input type="number" id="setting-short-break" value="5" min="1" max="30"
+                                class="w-full bg-slate-900/50 border border-slate-600 rounded-lg px-2 py-1.5 text-white text-sm sm:text-base font-medium text-center focus:border-accent focus:outline-none">
+                        </div>
+                        <div class="bg-slate-700/30 rounded-lg p-2 sm:p-3">
+                            <label class="text-[10px] sm:text-xs text-slate-400 block mb-1">Uzun (dk)</label>
+                            <input type="number" id="setting-long-break" value="15" min="1" max="60"
+                                class="w-full bg-slate-900/50 border border-slate-600 rounded-lg px-2 py-1.5 text-white text-sm sm:text-base font-medium text-center focus:border-accent focus:outline-none">
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-700/30 rounded-lg p-2 sm:p-3">
+                        <label class="text-[10px] sm:text-xs text-slate-400 block mb-1">Uzun Mola Aralığı</label>
+                        <div class="flex items-center gap-2">
+                            <input type="number" id="setting-long-break-interval" value="4" min="2" max="10"
+                                class="w-16 bg-slate-900/50 border border-slate-600 rounded-lg px-2 py-1.5 text-white text-sm font-medium text-center focus:border-accent focus:outline-none">
+                            <span class="text-xs text-slate-400">pomodoro'da bir</span>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider pt-2">Otomasyon</h3>
+
+                    <div class="space-y-2">
+                        <label
+                            class="flex items-center justify-between bg-slate-700/30 rounded-lg p-2 sm:p-3 cursor-pointer">
+                            <span class="text-xs sm:text-sm text-slate-200">Odak bitince molayı otomatik başlat</span>
+                            <input type="checkbox" id="setting-auto-start-break" class="w-4 h-4 accent-accent rounded">
+                        </label>
+                        <label
+                            class="flex items-center justify-between bg-slate-700/30 rounded-lg p-2 sm:p-3 cursor-pointer">
+                            <span class="text-xs sm:text-sm text-slate-200">Mola bitince odağı otomatik başlat</span>
+                            <input type="checkbox" id="setting-auto-start-focus" class="w-4 h-4 accent-accent rounded">
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Sound Settings Tab -->
+                <div id="settings-panel-sound" class="settings-panel hidden space-y-4">
+                    <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Ortam Sesi</h3>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                        <button
+                            class="ambience-btn flex flex-col items-center gap-1 p-3 rounded-lg bg-slate-700/30 hover:bg-slate-700/50 transition-all border-2 border-transparent"
+                            data-sound="mute">
+                            <i class="fa-solid fa-volume-xmark text-lg text-slate-400"></i>
+                            <span class="text-xs text-slate-300">Sessiz</span>
+                        </button>
+                        <button
+                            class="ambience-btn flex flex-col items-center gap-1 p-3 rounded-lg bg-slate-700/30 hover:bg-slate-700/50 transition-all border-2 border-transparent"
+                            data-sound="rain">
+                            <i class="fa-solid fa-cloud-rain text-lg text-slate-400"></i>
+                            <span class="text-xs text-slate-300">Yağmur</span>
+                        </button>
+                        <button
+                            class="ambience-btn flex flex-col items-center gap-1 p-3 rounded-lg bg-slate-700/30 hover:bg-slate-700/50 transition-all border-2 border-transparent"
+                            data-sound="cafe">
+                            <i class="fa-solid fa-mug-hot text-lg text-slate-400"></i>
+                            <span class="text-xs text-slate-300">Kafe</span>
+                        </button>
+                        <button
+                            class="ambience-btn flex flex-col items-center gap-1 p-3 rounded-lg bg-slate-700/30 hover:bg-slate-700/50 transition-all border-2 border-transparent"
+                            data-sound="fireplace">
+                            <i class="fa-solid fa-fire text-lg text-slate-400"></i>
+                            <span class="text-xs text-slate-300">Şömine</span>
+                        </button>
+                    </div>
+
+                    <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider pt-2">Ses Seviyesi</h3>
+
+                    <div class="bg-slate-700/30 rounded-lg p-3">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-volume-low text-slate-400"></i>
+                            <input type="range" id="setting-volume" min="0" max="100" value="80"
+                                class="flex-1 h-2 bg-slate-600 rounded-lg appearance-none cursor-pointer accent-accent">
+                            <span id="volume-value" class="text-sm text-accent font-medium w-10 text-right">80%</span>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider pt-2">Alarm Tekrarı</h3>
+
+                    <div class="flex gap-2">
+                        <button
+                            class="alarm-repeat-btn flex-1 py-2 rounded-lg bg-slate-700/30 text-slate-300 text-xs sm:text-sm font-medium hover:bg-slate-700/50 transition-all border-2 border-transparent"
+                            data-repeat="1">1 Kez</button>
+                        <button
+                            class="alarm-repeat-btn flex-1 py-2 rounded-lg bg-slate-700/30 text-slate-300 text-xs sm:text-sm font-medium hover:bg-slate-700/50 transition-all border-2 border-transparent"
+                            data-repeat="3">3 Kez</button>
+                        <button
+                            class="alarm-repeat-btn flex-1 py-2 rounded-lg bg-slate-700/30 text-slate-300 text-xs sm:text-sm font-medium hover:bg-slate-700/50 transition-all border-2 border-transparent"
+                            data-repeat="5">5 Kez</button>
+                    </div>
+                </div>
+
+                <!-- Language Settings Tab -->
+                <div id="settings-panel-lang" class="settings-panel hidden space-y-4">
+                    <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Dil Seçimi</h3>
+
+                    <div class="space-y-2">
+                        <label
+                            class="flex items-center gap-3 bg-slate-700/30 rounded-lg p-3 cursor-pointer border-2 border-transparent hover:border-slate-600 transition-all"
+                            id="lang-option-tr">
+                            <input type="radio" name="language" value="tr" checked class="w-4 h-4 accent-accent">
+                            <span class="text-2xl">🇹🇷</span>
+                            <span class="text-sm text-slate-200 font-medium">Türkçe</span>
+                        </label>
+                        <label
+                            class="flex items-center gap-3 bg-slate-700/30 rounded-lg p-3 cursor-pointer border-2 border-transparent hover:border-slate-600 transition-all"
+                            id="lang-option-en">
+                            <input type="radio" name="language" value="en" class="w-4 h-4 accent-accent">
+                            <span class="text-2xl">🇬🇧</span>
+                            <span class="text-sm text-slate-200 font-medium">English</span>
+                        </label>
+                    </div>
+
+                    <p class="text-xs text-slate-500 mt-4">
+                        <i class="fa-solid fa-info-circle mr-1"></i>
+                        Dil değişikliği sayfa yenilendikten sonra tam olarak uygulanacaktır.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Save Button -->
+            <div class="shrink-0 p-3 sm:p-4 bg-slate-800 border-t border-slate-700/50">
+                <button id="save-settings-btn"
+                    class="w-full btn-accent rounded-xl py-2.5 sm:py-3 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 active:scale-95 transition-all">
+                    <i class="fa-solid fa-check"></i>
+                    <span>Kaydet</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Notification Permission Modal (Soft Prompt) - Responsive -->
-    <div id="notification-modal" class="hidden fixed inset-0 modal-backdrop z-50 flex items-center justify-center modal-container">
+    <div id="notification-modal"
+        class="hidden fixed inset-0 modal-backdrop z-50 flex items-center justify-center modal-container">
         <div class="bg-slate-800 rounded-2xl sm:rounded-3xl p-5 sm:p-8 max-w-xs sm:max-w-sm w-full text-center mx-3">
-            <div class="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-accent/20 mb-4 sm:mb-6">
+            <div
+                class="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-accent/20 mb-4 sm:mb-6">
                 <i class="fa-regular fa-bell text-2xl sm:text-3xl text-accent"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-bold text-slate-100 mb-2">Zaman Dolunca Haber Ver?</h3>
@@ -822,7 +1058,8 @@
                 Süre bittiğinde veya mola zamanı geldiğinde sana bildirim gönderebilmem için iznine ihtiyacım var.
             </p>
             <div class="flex flex-col gap-2 sm:gap-3">
-                <button id="enable-notifications-btn" class="btn-accent py-2.5 sm:py-3 rounded-xl font-semibold text-sm sm:text-base">
+                <button id="enable-notifications-btn"
+                    class="btn-accent py-2.5 sm:py-3 rounded-xl font-semibold text-sm sm:text-base">
                     İzin Ver
                 </button>
                 <button id="close-notification-modal-btn"
@@ -963,12 +1200,11 @@
 
     <script>
         // =====================
-        // Configuration Constants (Single Source of Truth)
-        // =====================
-        const POMODORO_DURATION = 25 * 60; // 25 minutes in seconds
-        const SHORT_BREAK_DURATION = 5 * 60; // 5 minutes in seconds
-        const LONG_BREAK_DURATION = 15 * 60; // 15 minutes in seconds
-        const POMODOROS_UNTIL_LONG_BREAK = 4;
+        // Configuration Constants (Modified by Settings)
+        let POMODORO_DURATION = 25 * 60; // 25 minutes in seconds
+        let SHORT_BREAK_DURATION = 5 * 60; // 5 minutes in seconds
+        let LONG_BREAK_DURATION = 15 * 60; // 15 minutes in seconds
+        let POMODOROS_UNTIL_LONG_BREAK = 4;
 
         // Motivation Quotes (Culture & Discipline)
         const motivationQuotes = [
@@ -1040,56 +1276,394 @@
         // =====================
         // DOM Elements
         // =====================
-        const elements = {
-            app: document.getElementById('app'),
-            timerDisplay: document.getElementById('timer-display'),
-            progressCircle: document.getElementById('progress-circle'),
-            modeIndicator: document.getElementById('mode-indicator'),
-            pomodoroCounter: document.getElementById('pomodoro-counter'),
-            startBtn: document.getElementById('start-btn'),
-            pauseBtn: document.getElementById('pause-btn'),
-            resetBtn: document.getElementById('reset-btn'),
-            skipBtn: document.getElementById('skip-btn'),
-            dailyFocus: document.getElementById('daily-focus'),
-            soundBtns: document.querySelectorAll('.sound-btn'),
-            audioRain: document.getElementById('audio-rain'),
-            audioCafe: document.getElementById('audio-cafe'),
-            audioFireplace: document.getElementById('audio-fireplace'),
-            audioComplete: document.getElementById('audio-complete'),
-            audioBreakEnd: document.getElementById('audio-break-end'),
+        // Global Element References (Initialized in init)
+        let elements = {};
 
-            // Modal Elements
-            modal: document.getElementById('completion-modal'),
-            modalFocusTime: document.getElementById('modal-focus-time'),
-            closeModalBtn: document.getElementById('close-modal-btn'),
-
-            // New Modal Elements
-            tabStory: document.getElementById('tab-story'),
-            tabFeed: document.getElementById('tab-feed'),
-            previewWrapper: document.getElementById('preview-wrapper'),
-            previewLoading: document.getElementById('preview-loading'),
-            downloadActiveBtn: document.getElementById('download-active-btn'),
-            rerollBtn: document.getElementById('reroll-btn'),
-
-            // Hidden Export Templates
-            exportStory: document.getElementById('export-story'),
-            exportFeed: document.getElementById('export-feed'),
-
-            // Notification Elements
-            notificationBtn: document.getElementById('notification-btn'),
-            notificationModal: document.getElementById('notification-modal'),
-            enableNotificationsBtn: document.getElementById('enable-notifications-btn'),
-            closeNotificationModalBtn: document.getElementById('close-notification-modal-btn'),
-
-            // Stats Modal Elements
-            statsBtn: document.getElementById('stats-btn'),
-            statsModal: document.getElementById('stats-modal'),
-            statsTodayTime: document.getElementById('stats-today-time'),
-            statsTodayPomodoros: document.getElementById('stats-today-pomodoros'),
-            statsWeeklyList: document.getElementById('stats-weekly-list'),
-            createPosterBtn: document.getElementById('create-poster-btn'),
-            closeStatsModalBtn: document.getElementById('close-stats-modal-btn')
+        // Settings State (with defaults)
+        let settings = {
+            focusDuration: 25,
+            shortBreak: 5,
+            longBreak: 15,
+            longBreakInterval: 4,
+            autoStartBreak: false,
+            autoStartFocus: false,
+            ambienceSound: 'mute',
+            volume: 80,
+            alarmRepeat: 1,
+            language: 'tr'
         };
+
+        // Tasks State
+        let tasks = [];
+
+        // Task Elements (Initialized in init)
+        let taskElements = {};
+
+        function updateElementReferences() {
+            elements = {
+                app: document.getElementById('app'),
+                timerDisplay: document.getElementById('timer-display'),
+                progressCircle: document.getElementById('progress-circle'),
+                modeIndicator: document.getElementById('mode-indicator'),
+                pomodoroCounter: document.getElementById('pomodoro-counter'),
+                startBtn: document.getElementById('start-btn'),
+                pauseBtn: document.getElementById('pause-btn'),
+                resetBtn: document.getElementById('reset-btn'),
+                skipBtn: document.getElementById('skip-btn'),
+                dailyFocus: document.getElementById('daily-focus'),
+                soundBtns: document.querySelectorAll('.sound-btn'),
+                audioRain: document.getElementById('audio-rain'),
+                audioCafe: document.getElementById('audio-cafe'),
+                audioFireplace: document.getElementById('audio-fireplace'),
+                audioComplete: document.getElementById('audio-complete'),
+                audioBreakEnd: document.getElementById('audio-break-end'),
+
+                // Modal Elements
+                modal: document.getElementById('completion-modal'),
+                modalFocusTime: document.getElementById('modal-focus-time'),
+                closeModalBtn: document.getElementById('close-modal-btn'),
+
+                // New Modal Elements
+                tabStory: document.getElementById('tab-story'),
+                tabFeed: document.getElementById('tab-feed'),
+                previewWrapper: document.getElementById('preview-wrapper'),
+                previewLoading: document.getElementById('preview-loading'),
+                downloadActiveBtn: document.getElementById('download-active-btn'),
+                rerollBtn: document.getElementById('reroll-btn'),
+
+                // Hidden Export Templates
+                exportStory: document.getElementById('export-story'),
+                exportFeed: document.getElementById('export-feed'),
+
+                // Notification Elements
+                notificationBtn: document.getElementById('notification-btn'),
+                notificationModal: document.getElementById('notification-modal'),
+                enableNotificationsBtn: document.getElementById('enable-notifications-btn'),
+                closeNotificationModalBtn: document.getElementById('close-notification-modal-btn'),
+
+                // Stats Modal Elements
+                statsBtn: document.getElementById('stats-btn'),
+                statsModal: document.getElementById('stats-modal'),
+                statsTodayTime: document.getElementById('stats-today-time'),
+                statsTodayPomodoros: document.getElementById('stats-today-pomodoros'),
+                statsWeeklyList: document.getElementById('stats-weekly-list'),
+                createPosterBtn: document.getElementById('create-poster-btn'),
+                closeStatsModalBtn: document.getElementById('close-stats-modal-btn'),
+
+                // Settings Modal Elements
+                settingsBtn: document.getElementById('settings-btn'),
+                settingsModal: document.getElementById('settings-modal'),
+                closeSettingsBtn: document.getElementById('close-settings-btn'),
+                saveSettingsBtn: document.getElementById('save-settings-btn'),
+                settingsTabTimer: document.getElementById('settings-tab-timer'),
+                settingsTabSound: document.getElementById('settings-tab-sound'),
+                settingsTabLang: document.getElementById('settings-tab-lang'),
+                settingsPanelTimer: document.getElementById('settings-panel-timer'),
+                settingsPanelSound: document.getElementById('settings-panel-sound'),
+                settingsPanelLang: document.getElementById('settings-panel-lang'),
+                // Settings Inputs
+                settingFocusDuration: document.getElementById('setting-focus-duration'),
+                settingShortBreak: document.getElementById('setting-short-break'),
+                settingLongBreak: document.getElementById('setting-long-break'),
+                settingLongBreakInterval: document.getElementById('setting-long-break-interval'),
+                settingAutoStartBreak: document.getElementById('setting-auto-start-break'),
+                settingAutoStartFocus: document.getElementById('setting-auto-start-focus'),
+                settingVolume: document.getElementById('setting-volume'),
+                volumeValue: document.getElementById('volume-value'),
+                ambienceBtns: document.querySelectorAll('.ambience-btn'),
+                alarmRepeatBtns: document.querySelectorAll('.alarm-repeat-btn')
+            };
+
+            taskElements = {
+                input: document.getElementById('task-input'),
+                addBtn: document.getElementById('add-task-btn'),
+                list: document.getElementById('task-list'),
+                activeDisplay: document.getElementById('active-task-display'),
+                activeText: document.getElementById('active-task-text')
+            };
+        }
+
+        // Load tasks from localStorage
+        function loadTasks() {
+            const saved = localStorage.getItem('odaklan_tasks');
+            if (saved) {
+                tasks = JSON.parse(saved);
+            }
+            renderTasks();
+            updateActiveTaskDisplay();
+        }
+
+        // Save tasks to localStorage
+        function saveTasks() {
+            localStorage.setItem('odaklan_tasks', JSON.stringify(tasks));
+        }
+
+        // Add new task
+        function addTask(text) {
+            if (!text.trim()) return;
+            const task = {
+                id: Date.now(),
+                text: text.trim(),
+                completed: false,
+                isActive: tasks.length === 0 // First task is auto-active
+            };
+            tasks.push(task);
+            saveTasks();
+            renderTasks();
+            updateActiveTaskDisplay();
+        }
+
+        // Remove task
+        function removeTask(id) {
+            const wasActive = tasks.find(t => t.id === id)?.isActive;
+            tasks = tasks.filter(t => t.id !== id);
+            // If removed task was active, make first remaining task active
+            if (wasActive && tasks.length > 0) {
+                tasks[0].isActive = true;
+            }
+            saveTasks();
+            renderTasks();
+            updateActiveTaskDisplay();
+        }
+
+        // Toggle task completion (with Auto-Advance)
+        function toggleTaskComplete(id) {
+            const task = tasks.find(t => t.id === id);
+            if (task) {
+                task.completed = !task.completed;
+
+                // Auto-Advance Logic
+                if (task.completed && task.isActive) {
+                    task.isActive = false; // Deactivate current
+                    // Find next incomplete task
+                    const nextTask = tasks.find(t => !t.completed && t.id !== id);
+                    if (nextTask) {
+                        nextTask.isActive = true;
+                    }
+                }
+
+                saveTasks();
+                renderTasks();
+                updateActiveTaskDisplay();
+            }
+        }
+
+        // Set active task
+        function setActiveTask(id) {
+            tasks.forEach(t => t.isActive = (t.id === id));
+            saveTasks();
+            renderTasks();
+            updateActiveTaskDisplay();
+        }
+
+        // Drag & Drop Handlers
+        let draggedItem = null;
+
+        function handleDragStart(e, id) {
+            draggedItem = tasks.find(t => t.id === id);
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', id);
+            // Add ghost class for visual feedback if needed
+            e.target.classList.add('opacity-50');
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            // Add visual feedback
+            const taskItem = e.target.closest('.task-item');
+            if (taskItem) taskItem.classList.add('drag-over');
+            return false;
+        }
+
+        function handleDragLeave(e) {
+            const taskItem = e.target.closest('.task-item');
+            if (taskItem) taskItem.classList.remove('drag-over');
+        }
+
+        function handleDrop(e, targetId) {
+            e.stopPropagation();
+            // Remove all drag feedback classes
+            document.querySelectorAll('.task-item').forEach(el => {
+                el.classList.remove('drag-over', 'dragging');
+            });
+
+            if (draggedItem && draggedItem.id !== targetId) {
+                const draggedIndex = tasks.findIndex(t => t.id === draggedItem.id);
+                const targetIndex = tasks.findIndex(t => t.id === targetId);
+
+                if (draggedIndex > -1 && targetIndex > -1) {
+                    tasks.splice(draggedIndex, 1);
+                    tasks.splice(targetIndex, 0, draggedItem);
+                    saveTasks();
+                    renderTasks();
+                }
+            }
+            draggedItem = null;
+            return false;
+        }
+
+        // Render task list (Enhanced UX with numbering)
+        function renderTasks() {
+            if (!taskElements.list) return;
+
+            taskElements.list.innerHTML = tasks.map((task, index) => `
+                <div class="task-item flex items-center gap-2 sm:gap-3 bg-slate-800/40 rounded-xl px-2 sm:px-3 py-2.5 sm:py-3 group transition-all duration-200 border ${task.isActive ? 'border-accent/30 bg-slate-800/60' : 'border-transparent'}"
+                     draggable="true"
+                     ondragstart="handleDragStart(event, ${task.id})"
+                     ondragover="handleDragOver(event)"
+                     ondragleave="handleDragLeave(event)"
+                     ondrop="handleDrop(event, ${task.id})">
+                    
+                    <!-- Task Number -->
+                    <span class="text-xs font-bold ${task.isActive ? 'text-accent' : 'text-slate-600'} w-5 text-center shrink-0">${index + 1}.</span>
+
+                    <!-- Completion Checkbox - Touch optimized -->
+                    <button onclick="toggleTaskComplete(${task.id})" 
+                        class="w-7 h-7 flex items-center justify-center rounded-lg border-2 ${task.completed ? 'bg-accent border-accent' : 'border-slate-600 hover:border-accent/50'} transition-all duration-200 shrink-0 active:scale-90 touch-manipulation">
+                        ${task.completed ? '<i class="fa-solid fa-check text-xs text-slate-900 font-bold"></i>' : ''}
+                    </button>
+
+                    <!-- Task Text + Active Badge -->
+                    <div class="flex-1 flex flex-col min-w-0" onclick="setActiveTask(${task.id})">
+                        <span class="text-sm font-medium cursor-pointer transition-colors select-none ${task.completed ? 'line-through text-slate-500' : 'text-slate-200'} ${task.isActive ? 'text-accent' : ''} truncate touch-manipulation">
+                            ${task.text}
+                        </span>
+                        ${task.isActive && !task.completed ? '<span class="text-[10px] text-accent/70 mt-0.5">🎯 Odaklanıyorsun</span>' : ''}
+                    </div>
+
+                    <!-- Delete Button -->
+                    <button onclick="removeTask(${task.id})" 
+                        class="w-9 h-9 flex items-center justify-center text-slate-500 hover:text-red-400 active:text-red-500 active:scale-95 hover:bg-red-400/10 rounded-lg sm:opacity-0 sm:group-hover:opacity-100 transition-all focus:opacity-100 shrink-0 touch-manipulation">
+                        <i class="fa-solid fa-trash-can text-xs"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Update active task display
+        function updateActiveTaskDisplay() {
+            const active = tasks.find(t => t.isActive && !t.completed);
+            if (active && taskElements.activeDisplay && taskElements.activeText) {
+                taskElements.activeText.textContent = active.text;
+                taskElements.activeDisplay.classList.remove('hidden');
+            } else if (taskElements.activeDisplay) {
+                taskElements.activeDisplay.classList.add('hidden');
+            }
+        }
+
+        // Load settings from localStorage
+        function loadSettings() {
+            const saved = localStorage.getItem('odaklan_settings');
+            if (saved) {
+                settings = { ...settings, ...JSON.parse(saved) };
+            }
+            applySettings();
+        }
+
+        // Save settings to localStorage
+        function saveSettings() {
+            localStorage.setItem('odaklan_settings', JSON.stringify(settings));
+        }
+
+        // Apply settings to app
+        function applySettings() {
+            POMODORO_DURATION = settings.focusDuration * 60;
+            SHORT_BREAK_DURATION = settings.shortBreak * 60;
+            LONG_BREAK_DURATION = settings.longBreak * 60;
+            POMODOROS_UNTIL_LONG_BREAK = settings.longBreakInterval;
+
+            // Update audio volume
+            const vol = settings.volume / 100;
+            if (elements.audioRain) elements.audioRain.volume = vol;
+            if (elements.audioCafe) elements.audioCafe.volume = vol;
+            if (elements.audioFireplace) elements.audioFireplace.volume = vol;
+            if (elements.audioComplete) elements.audioComplete.volume = vol;
+            if (elements.audioBreakEnd) elements.audioBreakEnd.volume = vol;
+
+            // Reset timer to new duration if not running
+            if (!state.isRunning) {
+                resetCurrentModeTimer();
+            }
+        }
+
+        // Populate settings modal with current values
+        function populateSettingsModal() {
+            elements.settingFocusDuration.value = settings.focusDuration;
+            elements.settingShortBreak.value = settings.shortBreak;
+            elements.settingLongBreak.value = settings.longBreak;
+            elements.settingLongBreakInterval.value = settings.longBreakInterval;
+            elements.settingAutoStartBreak.checked = settings.autoStartBreak;
+            elements.settingAutoStartFocus.checked = settings.autoStartFocus;
+            elements.settingVolume.value = settings.volume;
+            elements.volumeValue.textContent = settings.volume + '%';
+
+            // Highlight active ambience
+            elements.ambienceBtns.forEach(btn => {
+                if (btn.dataset.sound === settings.ambienceSound) {
+                    btn.classList.add('border-accent', 'bg-accent/10');
+                } else {
+                    btn.classList.remove('border-accent', 'bg-accent/10');
+                }
+            });
+
+            // Highlight active alarm repeat
+            elements.alarmRepeatBtns.forEach(btn => {
+                if (parseInt(btn.dataset.repeat) === settings.alarmRepeat) {
+                    btn.classList.add('border-accent', 'bg-accent/10');
+                } else {
+                    btn.classList.remove('border-accent', 'bg-accent/10');
+                }
+            });
+
+            // Language radio
+            document.querySelector(`input[name="language"][value="${settings.language}"]`).checked = true;
+        }
+
+        // Show/hide settings modal
+        function showSettingsModal() {
+            populateSettingsModal();
+            switchSettingsTab('timer');
+            elements.settingsModal.classList.remove('hidden');
+        }
+
+        function hideSettingsModal() {
+            elements.settingsModal.classList.add('hidden');
+        }
+
+        // Settings tab switching
+        function switchSettingsTab(tab) {
+            const tabs = { timer: elements.settingsTabTimer, sound: elements.settingsTabSound, lang: elements.settingsTabLang };
+            const panels = { timer: elements.settingsPanelTimer, sound: elements.settingsPanelSound, lang: elements.settingsPanelLang };
+
+            Object.keys(tabs).forEach(key => {
+                if (key === tab) {
+                    tabs[key].classList.add('bg-accent', 'text-slate-900');
+                    tabs[key].classList.remove('text-slate-400');
+                    panels[key].classList.remove('hidden');
+                } else {
+                    tabs[key].classList.remove('bg-accent', 'text-slate-900');
+                    tabs[key].classList.add('text-slate-400');
+                    panels[key].classList.add('hidden');
+                }
+            });
+        }
+
+        // Save settings from modal
+        function saveSettingsFromModal() {
+            settings.focusDuration = parseInt(elements.settingFocusDuration.value) || 25;
+            settings.shortBreak = parseInt(elements.settingShortBreak.value) || 5;
+            settings.longBreak = parseInt(elements.settingLongBreak.value) || 15;
+            settings.longBreakInterval = parseInt(elements.settingLongBreakInterval.value) || 4;
+            settings.autoStartBreak = elements.settingAutoStartBreak.checked;
+            settings.autoStartFocus = elements.settingAutoStartFocus.checked;
+            settings.volume = parseInt(elements.settingVolume.value) || 80;
+            settings.language = document.querySelector('input[name="language"]:checked').value;
+
+            saveSettings();
+            applySettings();
+            hideSettingsModal();
+        }
 
         // =====================
         // Notification Helpers
@@ -1254,7 +1828,7 @@
         });
 
         // Initialize Observer on the parent of preview wrapper (the scrollable area)
-        resizeObserver.observe(elements.previewWrapper.parentElement);
+        // resizeObserver.observe(elements.previewWrapper.parentElement); // Moved to init
 
         function handleTabSwitch(tab) {
             state.activeTab = tab;
@@ -1454,20 +2028,20 @@
             // Get or create current month's stats
             const currentStats = getMonthlyStats();
             const today = new Date().getDate();
-            
+
             // Track unique active days using a Set stored as array
             let activeDays = currentStats.activeDays || [];
             if (!activeDays.includes(today)) {
                 activeDays.push(today);
             }
-            
+
             // Update the stats
             currentStats.totalMinutes = getCurrentMonthTotalMinutes();
             currentStats.totalPomodoros = getCurrentMonthTotalPomodoros();
             currentStats.daysActive = activeDays.length;
             currentStats.activeDays = activeDays;
             currentStats.lastUpdated = new Date().toISOString();
-            
+
             saveMonthlyStats(currentStats);
         }
 
@@ -1478,7 +2052,7 @@
             const month = now.getMonth();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             let total = 0;
-            
+
             // Check all days in current month (using actual month length)
             for (let day = 1; day <= daysInMonth; day++) {
                 const key = `odaklan_focus_${year}_${month}_${day}`;
@@ -1497,7 +2071,7 @@
             const month = now.getMonth();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             let total = 0;
-            
+
             // Check all days in current month (using actual month length)
             for (let day = 1; day <= daysInMonth; day++) {
                 const key = `odaklan_pomodoro_${year}_${month}_${day}`;
@@ -1522,7 +2096,7 @@
                 totalPomodoros: getCurrentMonthTotalPomodoros()
             };
             const prevStats = getPreviousMonthStats();
-            
+
             // If no previous month data, give encouraging message
             if (!prevStats.totalMinutes || prevStats.totalMinutes === 0) {
                 if (currentStats.totalMinutes > 0) {
@@ -1538,19 +2112,19 @@
                     type: "neutral"
                 };
             }
-            
+
             // Calculate percentage change
             const percentChange = ((currentStats.totalMinutes - prevStats.totalMinutes) / prevStats.totalMinutes) * 100;
-            
+
             // Get current day of month to estimate progress
             const dayOfMonth = new Date().getDate();
             const daysInMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
             const monthProgress = dayOfMonth / daysInMonth;
-            
+
             // Expected minutes by this point in month (linear projection)
             const expectedMinutes = prevStats.totalMinutes * monthProgress;
             const paceComparison = ((currentStats.totalMinutes - expectedMinutes) / expectedMinutes) * 100;
-            
+
             if (paceComparison > 20) {
                 return {
                     message: `Geçen ayın ${Math.round(paceComparison)}% üstünde gidiyorsun! 🔥`,
@@ -1579,8 +2153,8 @@
         }
 
         function formatMonthName(date = new Date()) {
-            const months = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 
-                           'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
+            const months = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
+                'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
             return months[date.getMonth()];
         }
 
@@ -1619,11 +2193,9 @@
             state.isRunning = true;
             state.sessionStartTime = Date.now();
             state.targetEndTime = Date.now() + (state.timeRemaining * MS_PER_SECOND);
-            elements.app.classList.add('focus-mode');
+            elements.app.classList.add('focus-mode', 'timer-running');
             elements.startBtn.classList.add('hidden');
             elements.pauseBtn.classList.remove('hidden');
-            elements.resetBtn.classList.remove('hidden');
-            elements.skipBtn.classList.remove('hidden');
             elements.resetBtn.classList.remove('hidden');
             elements.skipBtn.classList.remove('hidden');
             elements.pauseBtn.classList.add('pulse-animation');
@@ -1645,7 +2217,7 @@
             state.isRunning = false;
             clearInterval(state.intervalId);
             state.targetEndTime = null;
-            elements.app.classList.remove('focus-mode');
+            elements.app.classList.remove('focus-mode', 'timer-running');
             elements.startBtn.classList.remove('hidden');
             elements.pauseBtn.classList.add('hidden');
             elements.pauseBtn.classList.remove('pulse-animation');
@@ -1866,7 +2438,7 @@
             const trimmed = {};
             dates.forEach(date => trimmed[date] = history[date]);
             localStorage.setItem('odaklan_weekly_history', JSON.stringify(trimmed));
-            
+
             // Also update monthly stats
             updateMonthlyStats();
         }
@@ -1919,20 +2491,20 @@
             const comparison = getMonthlyComparisonMessage();
             const currentTotal = getCurrentMonthTotalMinutes();
             const prevStats = getPreviousMonthStats();
-            
+
             // Update the banner elements
             document.getElementById('monthly-comparison-emoji').textContent = comparison.emoji;
             document.getElementById('monthly-comparison-message').textContent = comparison.message;
             document.getElementById('monthly-current-total').textContent = currentTotal;
             document.getElementById('monthly-previous-total').textContent = prevStats.totalMinutes || 0;
-            
+
             // Update title with current month name
             document.getElementById('monthly-comparison-title').textContent = formatMonthName() + ' vs Geçen Ay';
-            
+
             // Style based on type
             const banner = document.getElementById('monthly-comparison-banner');
             banner.className = 'mx-3 sm:mx-4 mt-3 p-3 rounded-xl border';
-            
+
             if (comparison.type === 'positive') {
                 banner.classList.add('bg-gradient-to-r', 'from-green-500/10', 'to-slate-700/30', 'border-green-500/20');
             } else if (comparison.type === 'warning') {
@@ -2059,83 +2631,151 @@
         // ... displayTestNotification ...
 
         // =====================
-        // Event Listeners
         // =====================
-        elements.startBtn.addEventListener('click', handleStartClick);
-        elements.pauseBtn.addEventListener('click', pauseTimer);
-        elements.resetBtn.addEventListener('click', resetTimer);
-        elements.skipBtn.addEventListener('click', () => completePomodoro(true));
+        // Event Listeners (Initialized in init)
+        // =====================
+        function setupEventListeners() {
+            // Timer Controls
+            if (elements.startBtn) elements.startBtn.addEventListener('click', handleStartClick);
+            if (elements.pauseBtn) elements.pauseBtn.addEventListener('click', pauseTimer);
+            if (elements.resetBtn) elements.resetBtn.addEventListener('click', resetTimer);
+            if (elements.skipBtn) elements.skipBtn.addEventListener('click', () => completePomodoro(true));
 
-        // Notification Button Listener (Manual Click)
-        // Wrapped in arrow function to ensure safe execution
-        elements.notificationBtn.addEventListener('click', () => {
-            // 1. Check for Standard Notification API
-            if ('Notification' in window) {
-                showNotificationPrompt(false);
-            } else {
-                // 2. iOS Fallback / Education
-                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-                if (isIOS) {
-                    alert("iOS'ta bildirim almak için:\n\n1. 'Paylaş' butonuna basın.\n2. 'Ana Ekrana Ekle' seçeneğini seçin.\n3. Uygulamayı ana ekrandan açın.");
-                } else {
-                    alert('Tarayıcınız bildirimleri desteklemiyor, ancak sesli uyarılar çalışacak.');
-                }
+            // Settings Button (Fixed: Added missing listener)
+            if (elements.settingsBtn) {
+                elements.settingsBtn.addEventListener('click', showSettingsModal);
             }
-        });
 
-        elements.soundBtns.forEach(btn => {
-            btn.addEventListener('click', () => { playSound(btn.dataset.sound); });
-        });
+            // Settings Modal Interactions
+            if (elements.closeSettingsBtn) elements.closeSettingsBtn.addEventListener('click', hideSettingsModal);
+            if (elements.saveSettingsBtn) elements.saveSettingsBtn.addEventListener('click', saveSettingsFromModal);
+            if (elements.settingsModal) {
+                elements.settingsModal.addEventListener('click', (e) => {
+                    if (e.target === elements.settingsModal) hideSettingsModal();
+                });
+            }
+            if (elements.settingsTabTimer) elements.settingsTabTimer.addEventListener('click', () => switchSettingsTab('timer'));
+            if (elements.settingsTabSound) elements.settingsTabSound.addEventListener('click', () => switchSettingsTab('sound'));
+            if (elements.settingsTabLang) elements.settingsTabLang.addEventListener('click', () => switchSettingsTab('lang'));
 
-        // Mode Selector Event Listeners
-        document.querySelectorAll('.mode-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                selectMode(btn.dataset.mode);
+            // Volume slider live update
+            if (elements.settingVolume) {
+                elements.settingVolume.addEventListener('input', () => {
+                    elements.volumeValue.textContent = elements.settingVolume.value + '%';
+                });
+            }
+
+            // Ambience buttons
+            if (elements.ambienceBtns) {
+                elements.ambienceBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        settings.ambienceSound = btn.dataset.sound;
+                        elements.ambienceBtns.forEach(b => b.classList.remove('border-accent', 'bg-accent/10'));
+                        btn.classList.add('border-accent', 'bg-accent/10');
+                        // Apply immediately
+                        state.currentSound = settings.ambienceSound;
+                        if (state.isRunning && settings.ambienceSound !== 'mute') {
+                            playSound(settings.ambienceSound);
+                        } else if (settings.ambienceSound === 'mute') {
+                            stopAllSounds();
+                        }
+                    });
+                });
+            }
+
+            // Alarm repeat buttons
+            if (elements.alarmRepeatBtns) {
+                elements.alarmRepeatBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        settings.alarmRepeat = parseInt(btn.dataset.repeat);
+                        elements.alarmRepeatBtns.forEach(b => b.classList.remove('border-accent', 'bg-accent/10'));
+                        btn.classList.add('border-accent', 'bg-accent/10');
+                    });
+                });
+            }
+
+            // Task Event Listeners
+            if (taskElements.addBtn && taskElements.input) {
+                taskElements.addBtn.addEventListener('click', () => {
+                    addTask(taskElements.input.value);
+                    taskElements.input.value = '';
+                });
+                taskElements.input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        addTask(taskElements.input.value);
+                        taskElements.input.value = '';
+                    }
+                });
+            }
+
+            // Notification Button Listener
+            if (elements.notificationBtn) {
+                elements.notificationBtn.addEventListener('click', () => {
+                    // 1. Check for Standard Notification API
+                    if ('Notification' in window) {
+                        showNotificationPrompt(false);
+                    } else {
+                        // 2. iOS Fallback / Education
+                        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                        if (isIOS) {
+                            alert("iOS'ta bildirim almak için:\n\n1. 'Paylaş' butonuna basın.\n2. 'Ana Ekrana Ekle' seçeneğini seçin.\n3. Uygulamayı ana ekrandan açın.");
+                        } else {
+                            alert('Tarayıcınız bildirimleri desteklemiyor, ancak sesli uyarılar çalışacak.');
+                        }
+                    }
+                });
+            }
+
+            // Mode Selector Event Listeners
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    selectMode(btn.dataset.mode);
+                });
             });
-        });
 
-        // New Modal Event Listeners
-        elements.tabStory.addEventListener('click', () => handleTabSwitch('story'));
-        elements.tabFeed.addEventListener('click', () => handleTabSwitch('feed'));
-        elements.rerollBtn.addEventListener('click', rerollQuote);
-        elements.downloadActiveBtn.addEventListener('click', downloadActiveTemplate);
+            // New Modal Event Listeners
+            elements.tabStory.addEventListener('click', () => handleTabSwitch('story'));
+            elements.tabFeed.addEventListener('click', () => handleTabSwitch('feed'));
+            elements.rerollBtn.addEventListener('click', rerollQuote);
+            elements.downloadActiveBtn.addEventListener('click', downloadActiveTemplate);
 
-        elements.closeModalBtn.addEventListener('click', hideCompletionModal);
-        elements.modal.addEventListener('click', (e) => {
-            if (e.target === elements.modal) hideCompletionModal();
-        });
+            elements.closeModalBtn.addEventListener('click', hideCompletionModal);
+            elements.modal.addEventListener('click', (e) => {
+                if (e.target === elements.modal) hideCompletionModal();
+            });
 
-        // Stats Modal Event Listeners
-        elements.statsBtn.addEventListener('click', showStatsModal);
-        elements.closeStatsModalBtn.addEventListener('click', hideStatsModal);
-        elements.statsModal.addEventListener('click', (e) => {
-            if (e.target === elements.statsModal) hideStatsModal();
-        });
-        elements.createPosterBtn.addEventListener('click', async () => {
-            hideStatsModal();
-            try { await document.fonts.ready; } catch (e) { }
-            state.currentQuote = getRandomQuote();
-            showCompletionModal();
-            calculateScaleAndRender();
-        });
+            // Stats Modal Event Listeners
+            elements.statsBtn.addEventListener('click', showStatsModal);
+            elements.closeStatsModalBtn.addEventListener('click', hideStatsModal);
+            elements.statsModal.addEventListener('click', (e) => {
+                if (e.target === elements.statsModal) hideStatsModal();
+            });
+            elements.createPosterBtn.addEventListener('click', async () => {
+                hideStatsModal();
+                try { await document.fonts.ready; } catch (e) { }
+                state.currentQuote = getRandomQuote();
+                showCompletionModal();
+                calculateScaleAndRender();
+            });
 
-        document.addEventListener('keydown', (e) => {
-            if (e.code === 'Space' && !e.target.matches('button')) {
-                e.preventDefault();
-                if (state.isRunning) pauseTimer();
-                else startTimer();
-            }
-            if (e.code === 'Escape') {
-                if (!elements.modal.classList.contains('hidden')) hideCompletionModal();
-                else if (state.isRunning) pauseTimer();
-            }
-            if (e.code === 'KeyR' && !e.target.matches('input')) resetTimer();
-        });
+            document.addEventListener('keydown', (e) => {
+                if (e.code === 'Space' && !e.target.matches('button') && !e.target.matches('input')) {
+                    e.preventDefault();
+                    if (state.isRunning) pauseTimer();
+                    else startTimer();
+                }
+                if (e.code === 'Escape') {
+                    if (!elements.modal.classList.contains('hidden')) hideCompletionModal();
+                    else if (state.isRunning) pauseTimer();
+                }
+                if (e.code === 'KeyR' && !e.target.matches('input')) resetTimer();
+            });
+        }
 
         // =====================
         // Initialization
         // =====================
-        
+
         // Service Worker Registration for Push Notifications
         async function registerServiceWorker() {
             if ('serviceWorker' in navigator) {
@@ -2145,7 +2785,7 @@
                         scope: './'
                     });
                     console.log('Service Worker registered successfully:', registration.scope);
-                    
+
                     // Listen for updates from the Service Worker
                     navigator.serviceWorker.addEventListener('message', (event) => {
                         if (event.data && event.data.type === 'SW_UPDATED') {
@@ -2154,12 +2794,12 @@
                             showUpdateAvailableToast();
                         }
                     });
-                    
+
                     // Check for updates periodically (every 30 minutes)
                     setInterval(() => {
                         registration.update();
                     }, 30 * 60 * 1000);
-                    
+
                     // Check for updates
                     registration.addEventListener('updatefound', () => {
                         const newWorker = registration.installing;
@@ -2170,7 +2810,7 @@
                             }
                         });
                     });
-                    
+
                     return registration;
                 } catch (error) {
                     console.error('Service Worker registration failed:', error);
@@ -2179,52 +2819,65 @@
             }
             return null;
         }
-        
+
         // Show subtle toast when update is available
         function showUpdateAvailableToast() {
             // Only show once per session using state object
             if (state.updateToastShown) return;
             state.updateToastShown = true;
-            
+
             const toast = document.createElement('div');
             toast.className = 'fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-accent text-slate-900 px-4 py-2 rounded-full text-sm font-medium shadow-lg z-50 cursor-pointer animate-bounce';
             toast.innerHTML = '<i class="fa-solid fa-arrow-rotate-right mr-2"></i>Güncelleme var! Tıkla ve yenile.';
             toast.onclick = () => window.location.reload();
             document.body.appendChild(toast);
-            
+
             // Auto-hide after 10 seconds
             setTimeout(() => {
                 toast.classList.add('opacity-0', 'transition-opacity');
                 setTimeout(() => toast.remove(), 500);
             }, 10000);
         }
-        
+
         function init() {
+            // First, initialize element references from DOM
+            updateElementReferences();
+
+            // Initialize Observers
+            if (elements.previewWrapper && elements.previewWrapper.parentElement) {
+                resizeObserver.observe(elements.previewWrapper.parentElement);
+            }
+
+            // Setup Event Listeners (Must happen after updateElementReferences)
+            setupEventListeners();
+
             // Register Service Worker for notifications
             registerServiceWorker();
-            
+
             loadDailyFocus();
             loadPomodoroCount();
+            loadSettings(); // Load settings before applying
+            loadTasks(); // Load tasks
             updateTimerDisplay();
             updateProgressRing();
             updateModeDisplay();
             updatePomodoroCounter();
             setupStorageSync();
             updateNotificationIcon();
-            elements.notificationBtn.addEventListener('click', () => showNotificationPrompt(false));
-            elements.closeNotificationModalBtn.addEventListener('click', () => {
-                document.getElementById('notification-modal').classList.add('hidden');
-            });
+
+
+
+
 
             // iOS Install Banner Logic - Enhanced
             const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
             const isAndroid = /Android/.test(navigator.userAgent);
             // Check both media query and Safari-specific standalone property
-            const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches 
-                                       || window.navigator.standalone === true
-                                       || document.referrer.includes('android-app://');
+            const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches
+                || window.navigator.standalone === true
+                || document.referrer.includes('android-app://');
             const iosBannerDismissed = localStorage.getItem('ios_banner_dismissed');
-            
+
             // Debug log for PWA detection
             console.log('PWA Detection:', { isIOS, isAndroid, isInStandaloneMode, standalone: window.navigator.standalone });
 
@@ -2233,7 +2886,7 @@
                 const iosBanner = document.getElementById('ios-install-banner');
                 if (iosBanner) {
                     iosBanner.classList.remove('hidden');
-                    
+
                     const closeBtn = document.getElementById('close-ios-banner');
                     if (closeBtn) {
                         closeBtn.addEventListener('click', () => {
@@ -2279,7 +2932,12 @@
             });
         }
 
-        init();
+        // Wait for DOM to be ready before initializing
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
     </script>
 
 </body>
