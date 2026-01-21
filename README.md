@@ -7,33 +7,50 @@
 ## ✨ Özellikler
 
 ### ⏱️ Pomodoro Zamanlayıcı
-- **25 dakika odak** + **5 dakika kısa mola** + **15 dakika uzun mola**
+- **Özelleştirilebilir süreler** (Ayarlar panelinden)
+- Odak / Kısa Mola / Uzun Mola modları
 - Her 4 pomodoro'dan sonra otomatik uzun mola
-- Manuel mod seçimi (istediğin zaman mola alabilirsin)
-- Görsel ilerleme halkası
+- Görsel ilerleme halkası (çalışırken parlama efekti)
+- **Otomatik başlatma** seçeneği (mola/odak geçişlerinde)
+
+### ✅ Görev Yönetimi
+- **Numaralı görev listesi** (1. 2. 3.)
+- **Aktif görev göstergesi** (🎯 Odaklanıyorsun)
+- Görev tamamlandığında **otomatik sonrakine geçiş**
+- **Sürükle-bırak** ile sıralama
+- Görevler `localStorage`'da saklanır
 
 ### 📊 İstatistikler
 - **Günlük odaklanma süresi** takibi
 - **Pomodoro sayacı** (sayfa yenilense bile korunur)
 - **Son 7 gün geçmişi** ile haftalık performans
-- Tıklanabilir istatistik paneli
+- Aylık karşılaştırma ve motivasyon mesajları
 
-### 🎨 Poster Oluşturucu
-- Çalışmanızı **Instagram Story** veya **Feed** formatında paylaşın
-- Motivasyon sözleri ile zenginleştirilmiş posterler
+### 🎨 Poster Oluşturucu ("Trophy Room")
+- **Instagram Story** veya **Feed** formatında dışa aktarma
+- Motivasyon sözleri (Türk/İslam kültüründen)
 - Tek tıkla indirme
 
+### ⚙️ Ayarlar Paneli
+- **Zamanlayıcı süreleri** (Odak, Kısa Mola, Uzun Mola)
+- **Ses ayarları** (Alarm, Ambiyans, Ses seviyesi)
+- **Dil seçimi** (Türkçe/İngilizce)
+- Tüm ayarlar kalıcı olarak kaydedilir
+
 ### 🔔 Bildirimler
-- Tarayıcı bildirimleri ile uyarı (izin gerektirir)
-- Mod'a özel bildirim mesajları
-- Sesli uyarılar
+- Tarayıcı bildirimleri (izin gerektirir)
+- iOS/PWA için akıllı yönlendirme
+- Sesli uyarılar (özelleştirilebilir)
 
 ### 🎵 Ambiyans Sesleri
 - **Sessiz** | **Yağmur** | **Kafe** | **Şömine**
-- Odaklanmayı artıran arka plan sesleri
+- Ayarlar panelinden kontrol
 
-### 📱 Tam Responsive
-- Mobil, tablet ve masaüstü uyumlu
+### 📱 Mobil Native Deneyim
+- **44px+ dokunma alanları** (Apple HIG uyumlu)
+- **Safe Area** desteği (iPhone çentik/home indicator)
+- **touch-manipulation** (çift tıklama zoom engeli)
+- **Active state feedback** (her dokunuşta görsel geri bildirim)
 - PWA desteği (Ana ekrana eklenebilir)
 
 ---
@@ -43,18 +60,17 @@
 ### Yerel Kullanım
 ```bash
 # Projeyi klonlayın
-git clone https://github.com/yourusername/odaklan.git
+git clone https://github.com/atakankarakas/odaklan.git
 
 # Klasöre gidin
 cd odaklan
 
-# index.html'i tarayıcınızda açın
-# Ya da basit bir HTTP sunucusu başlatın:
+# Tarayıcıda açın veya sunucu başlatın:
 npx serve .
 ```
 
 ### Canlı Demo
-[🔗 Odaklan! Demo](#) <!-- Kendi URL'nizi ekleyin -->
+[🔗 Odaklan! Demo](https://atakankarakas.github.io/odaklan)
 
 ---
 
@@ -62,46 +78,50 @@ npx serve .
 
 ```
 Odaklan!/
-├── index.html      # Ana uygulama (tek dosya)
-├── screenshot.png  # Ekran görüntüsü
-├── README.md       # Bu dosya
-└── sounds/         # Ses dosyaları (opsiyonel)
+├── index.html          # Ana uygulama (tek dosya)
+├── manifest.json       # PWA manifest
+├── sw.js               # Service Worker
+├── README.md           # Bu dosya
+└── assets/
+    └── sounds/         # Ses dosyaları
+        ├── rain.mp3
+        ├── cafe.mp3
+        ├── fireplace.mp3
+        ├── complete.mp3
+        └── break-end.mp3
 ```
 
 ---
 
 ## 🛠️ Teknolojiler
 
-- **HTML5** — Yapı
-- **Tailwind CSS** (CDN) — Stil
-- **Vanilla JavaScript** — Mantık
-- **LocalStorage** — Veri kalıcılığı
-- **Web Notifications API** — Bildirimler
-- **html2canvas** — Poster oluşturma
+| Teknoloji | Kullanım |
+|-----------|----------|
+| **HTML5** | Yapı |
+| **Tailwind CSS** (CDN) | Stil |
+| **Vanilla JavaScript** | Mantık |
+| **LocalStorage** | Veri kalıcılığı |
+| **Web Notifications API** | Bildirimler |
+| **html2canvas** | Poster oluşturma |
+| **Service Worker** | PWA & Cache |
 
 ---
 
 ## 📖 Kullanım
 
-1. **Mod Seç:** Odak, Kısa Mola veya Uzun Mola
-2. **Başla:** Timer'ı başlat
-3. **Çalış:** Odaklan ve zamanı takip et
-4. **Mola:** Pomodoro bitince otomatik mola moduna geçer
-5. **İstatistikler:** Sağ üstteki süreye tıkla → Detaylı istatistikler
-6. **Poster:** İstatistikler > Poster Oluştur → Paylaş!
+1. **Mod Seç:** Odak / Kısa Mola / Uzun Mola
+2. **Görev Ekle:** Görevler bölümünden ekle, sırala, tamamla
+3. **Başla:** Timer'ı başlat (Space tuşu da çalışır)
+4. **Odaklan:** İlerleme halkasını izle
+5. **İstatistikler:** Sağ üstteki süreye tıkla
+6. **Poster:** İstatistikler > Poster Oluştur
 
----
-
-## 🔧 Özelleştirme
-
-`index.html` içindeki sabitleri değiştirerek süreleri ayarlayabilirsiniz:
-
-```javascript
-const POMODORO_DURATION = 25 * 60;      // 25 dakika (saniye)
-const SHORT_BREAK_DURATION = 5 * 60;    // 5 dakika
-const LONG_BREAK_DURATION = 15 * 60;    // 15 dakika
-const POMODOROS_UNTIL_LONG_BREAK = 4;   // Uzun mola için pomodoro sayısı
-```
+### Klavye Kısayolları
+| Tuş | İşlem |
+|-----|-------|
+| `Space` | Başla / Durdur |
+| `R` | Sıfırla |
+| `Esc` | Modal'ı kapat / Durdur |
 
 ---
 
